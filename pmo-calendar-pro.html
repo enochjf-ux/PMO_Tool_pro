@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PMO Dashboard - Project Timeline Intelligence</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+      background: linear-gradient(135deg, #f8fafb 0%, #f0f4f8 100%); 
+      padding: 24px; 
+      color: #2d3436;
+    }
+    .container { max-width: 1600px; margin: 0 auto; }
+    
+    /* Header */
+    .header { margin-bottom: 32px; }
+    .header h1 { font-size: 32px; font-weight: 700; color: #1a1a2e; margin-bottom: 8px; }
+    .header p { color: #7f8c8d; font-size: 14px; }
+    
+    /* Dashboard Grid */
+    .dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 32px; }
+    .metric-card { 
+      background: white; 
+      border-radius: 12px; 
+      padding: 20px; 
+      border: 1px solid #e8eaed;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      transition: all 0.2s ease;
+    }
+    .metric-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); transform: translateY(-2px); }
+    .metric-label { font-size: 12px; font-weight: 600; color: #7f8c8d; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
+    .metric-value { font-size: 32px; font-weight: 700; color: #1a1a2e; margin-bottom: 8px; }
+    .metric-subtitle { font-size: 12px; color: #7f8c8d; }
+    
+    /* Status Badges */
+    .badge { 
+      display: inline-flex; 
+      align-items: center; 
+      gap: 6px;
+      padding: 4px 12px; 
+      border-radius: 20px; 
+      font-size: 12px; 
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+    .badge-success { background: #d4edda; color: #155724; }
+    .badge-warning { background: #fff3cd; color: #856404; }
+    .badge-danger { background: #f8d7da; color: #721c24; }
+    .badge-info { background: #d1ecf1; color: #0c5460; }
+    
+    /* Controls */
+    .controls { 
+      display: flex; 
+      gap: 12px; 
+      margin-bottom: 24px; 
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .search-box {
+      flex: 1;
+      min-width: 250px;
+      position: relative;
+    }
+    .search-box input {
+      width: 100%;
+      padding: 10px 16px;
+      border: 1px solid #e8eaed;
+      border-radius: 8px;
+      font-size: 13px;
+      background: white;
+      transition: all 0.2s;
+    }
+    .search-box input:focus {
+      outline: none;
+      border-color: #0066cc;
+      box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+    }
+    
+    .btn {
+      padding: 10px 16px;
+      border: 1px solid #e8eaed;
+      background: white;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn:hover { 
+      background: #f8fafb;
+      border-color: #d0d0d0;
+    }
+    .btn-primary {
+      background: #0066cc;
+      color: white;
+      border: none;
+    }
+    .btn-primary:hover { 
+      background: #0052a3;
+      box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+    }
+    
+    /* Table */
+    .table-wrapper {
+      background: white;
+      border-radius: 12px;
+      border: 1px solid #e8eaed;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    table { 
+      width: 100%; 
+      border-collapse: collapse; 
+      font-size: 13px; 
+    }
+    thead { 
+      background: #f8fafb; 
+      border-bottom: 1px solid #e8eaed;
+    }
+    th { 
+      padding: 14px 16px; 
+      text-align: left; 
+      font-weight: 600; 
+      color: #5f6368;
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+    }
+    td { 
+      padding: 14px 16px; 
+      border-bottom: 1px solid #f0f2f5;
+      vertical-align: middle;
+    }
+    tbody tr { transition: background 0.15s ease; }
+    tbody tr:hover { background: #fafbfc; }
+    
+    /* Status Indicators */
+    .status-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+    .dot-on-track { background: #28a745; }
+    .dot-at-risk { background: #ffc107; }
+    .dot-overdue { background: #dc3545; }
+    .dot-completed { background: #20c997; }
+    
+    /* Input Fields */
+    input[type="text"], input[type="date"] {
+      padding: 8px 12px;
+      border: 1px solid #e8eaed;
+      border-radius: 6px;
+      font-size: 13px;
+      transition: all 0.2s;
+    }
+    input[type="text"]:focus, input[type="date"]:focus {
+      outline: none;
+      border-color: #0066cc;
+      box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+    }
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      accent-color: #0066cc;
+    }
+    
+    /* Actions */
+    .actions { display: flex; gap: 8px; }
+    .action-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      color: #7f8c8d;
+      font-size: 16px;
+      transition: all 0.2s;
+      border-radius: 4px;
+    }
+    .action-btn:hover {
+      color: #0066cc;
+      background: #e8f0fe;
+    }
+    .action-btn.delete:hover {
+      color: #dc3545;
+      background: #f8d7da;
+    }
+    
+    /* Risk Alert Box */
+    .risk-alert {
+      background: #fff5f5;
+      border-left: 4px solid #dc3545;
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 24px;
+      display: none;
+    }
+    .risk-alert.show { display: block; }
+    .risk-alert h3 { color: #dc3545; font-size: 14px; margin-bottom: 8px; }
+    .risk-alert-item {
+      font-size: 13px;
+      color: #2d3436;
+      padding: 4px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    /* Progress Bar */
+    .progress-container { display: flex; align-items: center; gap: 12px; }
+    .progress-bar {
+      flex: 1;
+      height: 8px;
+      background: #e8eaed;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #28a745, #20c997);
+      transition: width 0.3s ease;
+    }
+    .progress-text { font-size: 12px; font-weight: 600; color: #2d3436; min-width: 40px; }
+    
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #7f8c8d;
+    }
+    .empty-state i { font-size: 48px; margin-bottom: 16px; opacity: 0.3; }
+    .empty-state p { margin: 8px 0; }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .dashboard { grid-template-columns: repeat(2, 1fr); }
+      .controls { flex-direction: column; }
+      .search-box { min-width: 100%; }
+      table { font-size: 12px; }
+      th, td { padding: 10px 12px; }
+    }
+    
+    @media print {
+      body { background: white; }
+      .controls { display: none; }
+      .metric-card { page-break-inside: avoid; }
+      tbody tr { page-break-inside: avoid; }
+    }
+    
+    /* Animations */
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .metric-card { animation: slideIn 0.3s ease forwards; }
+    .metric-card:nth-child(2) { animation-delay: 0.05s; }
+    .metric-card:nth-child(3) { animation-delay: 0.1s; }
+    .metric-card:nth-child(4) { animation-delay: 0.15s; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h1>PMO Dashboard</h1>
+      <p>Project timeline intelligence & milestone tracking</p>
+    </div>
+
+    <!-- Risk Alert -->
+    <div class="risk-alert" id="riskAlert">
+      <h3><i class="fas fa-exclamation-circle"></i> Items Requiring Attention</h3>
+      <div id="riskItems"></div>
+    </div>
+
+    <!-- Dashboard Metrics -->
+    <div class="dashboard">
+      <div class="metric-card">
+        <div class="metric-label"><i class="fas fa-tasks"></i> Total Actions</div>
+        <div class="metric-value" id="totalCount">0</div>
+        <div class="metric-subtitle">Active projects</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label"><i class="fas fa-check-circle"></i> Completion Rate</div>
+        <div class="metric-value" id="completionRate">0%</div>
+        <div class="metric-subtitle">
+          <div class="progress-container">
+            <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width: 0%"></div></div>
+            <span class="progress-text" id="progressText">0/0</span>
+          </div>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label"><i class="fas fa-exclamation-triangle"></i> At Risk</div>
+        <div class="metric-value" id="atRiskCount">0</div>
+        <div class="metric-subtitle">Items needing attention</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label"><i class="fas fa-calendar-times"></i> Overdue</div>
+        <div class="metric-value" id="overdueCount">0</div>
+        <div class="metric-subtitle">Past due date</div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search actions...">
+      </div>
+      <select id="filterStatus" style="padding: 10px 12px; border: 1px solid #e8eaed; border-radius: 8px; font-size: 13px;">
+        <option value="">All Status</option>
+        <option value="completed">Completed</option>
+        <option value="on-track">On Track</option>
+        <option value="at-risk">At Risk</option>
+        <option value="overdue">Overdue</option>
+      </select>
+      <button class="btn btn-primary" onclick="addRow()"><i class="fas fa-plus"></i> Add Action</button>
+      <button class="btn" onclick="exportJSON()"><i class="fas fa-download"></i> Export JSON</button>
+      <button class="btn" onclick="window.print()"><i class="fas fa-print"></i> Print</button>
+    </div>
+
+    <!-- Table -->
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 35%;">Action</th>
+            <th style="width: 12%;">Start Date</th>
+            <th style="width: 12%;">Status</th>
+            <th style="width: 18%;">Milestones</th>
+            <th style="width: 15%;">Progress</th>
+            <th style="width: 8%;">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="rows">
+          <tr style="height: 300px;">
+            <td colspan="6">
+              <div class="empty-state">
+                <i class="fas fa-inbox"></i>
+                <p style="font-size: 14px; font-weight: 600; color: #2d3436;">No actions yet</p>
+                <p>Click "Add Action" to get started</p>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const CHECKPOINTS = [
+      { label: 'Activity Start', offset: 0 },
+      { label: 'Review 1', offset: 3 },
+      { label: 'Int\'l Review', offset: 4 },
+      { label: 'Final Review', offset: 5 },
+      { label: 'Send Comms', offset: 6 }
+    ];
+
+    function formatDate(d) {
+      return d.toISOString().split('T')[0];
+    }
+
+    function getToday() {
+      const d = new Date();
+      d.setHours(0, 0, 0, 0);
+      return d;
+    }
+
+    function getStatus(startDate, checks) {
+      const today = getToday();
+      let hasOverdue = false;
+      let hasAtRisk = false;
+
+      CHECKPOINTS.forEach((cp, idx) => {
+        const d = new Date(startDate + 'T00:00:00Z');
+        d.setUTCDate(d.getUTCDate() + cp.offset);
+        const diff = (d - today) / (1000 * 60 * 60 * 24);
+
+        if (!checks[idx]) {
+          if (diff < 0) hasOverdue = true;
+          if (diff >= 0 && diff <= 3) hasAtRisk = true;
+        }
+      });
+
+      if (checks.every(c => c)) return 'completed';
+      if (hasOverdue) return 'overdue';
+      if (hasAtRisk) return 'at-risk';
+      return 'on-track';
+    }
+
+    function getRiskItems() {
+      const risks = [];
+      document.querySelectorAll('[data-row]').forEach(row => {
+        const action = row.querySelector('[data-action]').value;
+        const startDate = row.querySelector('[data-start-date]').value;
+        const checks = Array.from(row.querySelectorAll('[data-check]')).map(c => c.checked);
+        const status = getStatus(startDate, checks);
+
+        if (status === 'overdue') {
+          CHECKPOINTS.forEach((cp, idx) => {
+            if (!checks[idx]) {
+              const d = new Date(startDate + 'T00:00:00Z');
+              d.setUTCDate(d.getUTCDate() + cp.offset);
+              const diff = (d - getToday()) / (1000 * 60 * 60 * 24);
+              if (diff < 0) {
+                risks.push(`<div class="risk-alert-item"><i class="fas fa-times-circle" style="color: #dc3545;"></i> <strong>${action}</strong> - ${cp.label} was due ${Math.abs(Math.floor(diff))} days ago</div>`);
+              }
+            }
+          });
+        }
+      });
+      return risks;
+    }
+
+    function updateDashboard() {
+      const rows = Array.from(document.querySelectorAll('[data-row]'));
+      const total = rows.length;
+      
+      let completed = 0;
+      let atRisk = 0;
+      let overdue = 0;
+
+      rows.forEach(row => {
+        const startDate = row.querySelector('[data-start-date]').value;
+        const checks = Array.from(row.querySelectorAll('[data-check]')).map(c => c.checked);
+        const status = getStatus(startDate, checks);
+        const allChecked = checks.every(c => c);
+
+        if (allChecked) completed++;
+        if (status === 'at-risk') atRisk++;
+        if (status === 'overdue') overdue++;
+      });
+
+      const completionPct = total === 0 ? 0 : Math.round((completed / total) * 100);
+
+      document.getElementById('totalCount').textContent = total;
+      document.getElementById('completionRate').textContent = completionPct + '%';
+      document.getElementById('progressText').textContent = `${completed}/${total}`;
+      document.getElementById('progressFill').style.width = completionPct + '%';
+      document.getElementById('atRiskCount').textContent = atRisk;
+      document.getElementById('overdueCount').textContent = overdue;
+
+      const risks = getRiskItems();
+      const riskAlert = document.getElementById('riskAlert');
+      const riskItems = document.getElementById('riskItems');
+      if (risks.length > 0) {
+        riskAlert.classList.add('show');
+        riskItems.innerHTML = risks.join('');
+      } else {
+        riskAlert.classList.remove('show');
+      }
+
+      if (total === 0) {
+        document.getElementById('rows').innerHTML = `
+          <tr style="height: 300px;">
+            <td colspan="6">
+              <div class="empty-state">
+                <i class="fas fa-inbox"></i>
+                <p style="font-size: 14px; font-weight: 600; color: #2d3436;">No actions yet</p>
+                <p>Click "Add Action" to get started</p>
+              </div>
+            </td>
+          </tr>
+        `;
+      }
+    }
+
+    function renderRows() {
+      const tbody = document.getElementById('rows');
+      const rows = Array.from(document.querySelectorAll('[data-row]'));
+
+      if (rows.length === 0) {
+        updateDashboard();
+        return;
+      }
+
+      rows.forEach(row => {
+        const action = row.querySelector('[data-action]').value;
+        const startDate = row.querySelector('[data-start-date]').value;
+        const checks = Array.from(row.querySelectorAll('[data-check]')).map(c => c.checked);
+        const status = getStatus(startDate, checks);
+        const completedCount = checks.filter(c => c).length;
+
+        let statusBadge = '';
+        let statusDot = '';
+        if (status === 'completed') {
+          statusBadge = '<span class="badge badge-success"><i class="fas fa-check-circle"></i> Completed</span>';
+          statusDot = 'dot-completed';
+        } else if (status === 'overdue') {
+          statusBadge = '<span class="badge badge-danger"><i class="fas fa-exclamation-circle"></i> Overdue</span>';
+          statusDot = 'dot-overdue';
+        } else if (status === 'at-risk') {
+          statusBadge = '<span class="badge badge-warning"><i class="fas fa-exclamation-triangle"></i> At Risk</span>';
+          statusDot = 'dot-at-risk';
+        } else {
+          statusBadge = '<span class="badge badge-info"><i class="fas fa-arrow-right"></i> On Track</span>';
+          statusDot = 'dot-on-track';
+        }
+
+        let milestoneHtml = '';
+        CHECKPOINTS.forEach((cp, idx) => {
+          const checked = checks[idx];
+          const icon = checked ? '<i class="fas fa-check" style="color: #28a745;"></i>' : '<i class="fas fa-clock" style="color: #7f8c8d;"></i>';
+          milestoneHtml += `<span style="display: inline-block; font-size: 11px; margin-right: 8px; padding: 2px 6px; background: ${checked ? '#d4edda' : '#f0f2f5'}; border-radius: 4px; color: ${checked ? '#155724' : '#5f6368'};">${icon} ${cp.label}</span>`;
+        });
+
+        const cells = row.querySelectorAll('td');
+        cells[2].innerHTML = statusBadge;
+
+        if (cells[3]) cells[3].innerHTML = milestoneHtml;
+        if (cells[4]) {
+          const pct = Math.round((completedCount / CHECKPOINTS.length) * 100);
+          cells[4].innerHTML = `
+            <div class="progress-container">
+              <div class="progress-bar"><div class="progress-fill" style="width: ${pct}%"></div></div>
+              <span class="progress-text">${completedCount}/${CHECKPOINTS.length}</span>
+            </div>
+          `;
+        }
+      });
+
+      updateDashboard();
+    }
+
+    function saveData() {
+      const data = [];
+      document.querySelectorAll('[data-row]').forEach(row => {
+        const id = row.dataset.row;
+        data.push({
+          id,
+          action: row.querySelector('[data-action]').value,
+          startDate: row.querySelector('[data-start-date]').value,
+          checks: Array.from(row.querySelectorAll('[data-check]')).map(c => c.checked)
+        });
+      });
+      localStorage.setItem('pmoData', JSON.stringify(data));
+      renderRows();
+    }
+
+    function loadData() {
+      return JSON.parse(localStorage.getItem('pmoData') || '[]');
+    }
+
+    function addRow(data = null) {
+      const id = data?.id || 'r' + Date.now();
+      const action = data?.action || '';
+      const startDate = data?.startDate || formatDate(new Date());
+      const checks = data?.checks || [false, false, false, false, false];
+
+      const row = document.createElement('tr');
+      row.dataset.row = id;
+
+      let html = `
+        <td><input type="text" data-action value="${action}" placeholder="Enter action name" onchange="saveData()" style="width: 100%; border: 1px solid #e8eaed; padding: 8px 12px;" /></td>
+        <td><input type="date" data-start-date value="${startDate}" onchange="saveData()" style="width: 100%; padding: 8px 12px;" /></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td class="actions">
+          <button class="action-btn delete" onclick="deleteRow('${id}')" title="Delete"><i class="fas fa-trash"></i></button>
+        </td>
+      `;
+
+      row.innerHTML = html;
+
+      const checkboxCell = document.createElement('td');
+      checkboxCell.style.display = 'none';
+      checkboxCell.innerHTML = checks.map((c, i) => `<input type="checkbox" data-check ${c ? 'checked' : ''} onchange="saveData()" />`).join('');
+      row.appendChild(checkboxCell);
+
+      document.getElementById('rows').appendChild(row);
+      saveData();
+    }
+
+    function deleteRow(id) {
+      document.querySelector(`[data-row="${id}"]`).remove();
+      saveData();
+    }
+
+    function exportJSON() {
+      const data = loadData();
+      const enriched = data.map(item => {
+        const status = getStatus(item.startDate, item.checks);
+        return { ...item, status, completedMilestones: item.checks.filter(c => c).length };
+      });
+      const blob = new Blob([JSON.stringify(enriched, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `pmo-dashboard-${formatDate(new Date())}.json`;
+      a.click();
+    }
+
+    document.getElementById('searchInput').addEventListener('input', function(e) {
+      const query = e.target.value.toLowerCase();
+      document.querySelectorAll('[data-row]').forEach(row => {
+        const action = row.querySelector('[data-action]').value.toLowerCase();
+        row.style.display = action.includes(query) ? '' : 'none';
+      });
+    });
+
+    document.getElementById('filterStatus').addEventListener('change', function(e) {
+      const filter = e.target.value;
+      document.querySelectorAll('[data-row]').forEach(row => {
+        const startDate = row.querySelector('[data-start-date]').value;
+        const checks = Array.from(row.querySelectorAll('[data-check]')).map(c => c.checked);
+        const status = getStatus(startDate, checks);
+        if (!filter || status === filter) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    });
+
+    loadData().forEach(d => addRow(d));
+    if (loadData().length === 0) {
+      document.getElementById('rows').innerHTML = `
+        <tr style="height: 300px;">
+          <td colspan="6">
+            <div class="empty-state">
+              <i class="fas fa-inbox"></i>
+              <p style="font-size: 14px; font-weight: 600; color: #2d3436;">No actions yet</p>
+              <p>Click "Add Action" to get started</p>
+            </div>
+          </td>
+        </tr>
+      `;
+    } else {
+      renderRows();
+    }
+  </script>
+</body>
+</html>
