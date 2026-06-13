@@ -26,12 +26,12 @@
     
     /* Premium Header */
     .header {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, #1a1a2e 0%, #2d2d44 100%);
       color: white;
       padding: 40px 32px;
       border-radius: 16px;
       margin-bottom: 32px;
-      box-shadow: 0 20px 60px rgba(102, 126, 234, 0.4);
+      box-shadow: 0 20px 60px rgba(26, 26, 46, 0.4);
       position: relative;
       overflow: hidden;
     }
@@ -43,7 +43,7 @@
       right: -10%;
       width: 500px;
       height: 500px;
-      background: rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05);
       border-radius: 50%;
       filter: blur(40px);
     }
@@ -54,6 +54,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 24px;
     }
     
     .header h1 { font-size: 36px; font-weight: 700; margin-bottom: 8px; }
@@ -104,10 +106,97 @@
     }
     
     .tab-btn.active {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, #c41e3a 0%, #a01830 100%);
       color: white;
       border-color: transparent;
-      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+      box-shadow: 0 8px 20px rgba(196, 30, 58, 0.3);
+    }
+    
+    /* ===== CONSOLIDATED TOOLBAR (ONE PER PAGE) ===== */
+    .toolbar-container {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 32px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    }
+    
+    .toolbar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    
+    .search-box {
+      flex: 1;
+      min-width: 250px;
+      position: relative;
+    }
+    
+    .search-box input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid #e0e7ff;
+      border-radius: 8px;
+      font-size: 13px;
+      transition: all 0.2s;
+    }
+    
+    .search-box input:focus {
+      outline: none;
+      border-color: #c41e3a;
+      box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.1);
+    }
+    
+    .filter-select {
+      padding: 10px 16px;
+      border: 1px solid #e0e7ff;
+      border-radius: 8px;
+      font-size: 13px;
+      cursor: pointer;
+      background: white;
+      transition: all 0.2s;
+      min-width: 130px;
+    }
+    
+    .filter-select:focus {
+      outline: none;
+      border-color: #c41e3a;
+      box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.1);
+    }
+    
+    .btn {
+      padding: 10px 18px;
+      background: linear-gradient(135deg, #c41e3a 0%, #a01830 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+    
+    .btn:hover {
+      box-shadow: 0 8px 20px rgba(196, 30, 58, 0.3);
+      transform: translateY(-2px);
+    }
+    
+    .btn-secondary {
+      background: white;
+      color: #c41e3a;
+      border: 1px solid #e0e7ff;
+    }
+    
+    .btn-secondary:hover {
+      background: #f8faff;
     }
     
     /* Dashboard Grid */
@@ -127,6 +216,7 @@
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
       overflow: hidden;
+      cursor: pointer;
     }
     
     .metric-card::before {
@@ -136,11 +226,11 @@
       left: 0;
       right: 0;
       height: 4px;
-      background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(90deg, #c41e3a 0%, #a01830 100%);
     }
     
     .metric-card:hover {
-      box-shadow: 0 12px 30px rgba(102, 126, 234, 0.15);
+      box-shadow: 0 12px 30px rgba(196, 30, 58, 0.15);
       transform: translateY(-4px);
     }
     
@@ -185,7 +275,7 @@
     
     .progress-fill {
       height: 100%;
-      background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(90deg, #c41e3a 0%, #a01830 100%);
       transition: width 0.3s ease;
     }
     
@@ -218,240 +308,125 @@
       margin-bottom: 20px;
     }
     
-    /* Controls */
-    .controls {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 24px;
-      flex-wrap: wrap;
-      background: white;
-      padding: 20px;
+    /* Risk Alert */
+    .risk-alert-container {
+      background: #fff5f5;
+      border: 1px solid #fecccb;
       border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+      padding: 20px;
+      margin-bottom: 24px;
+      display: none;
     }
     
-    .search-box {
-      flex: 1;
-      min-width: 250px;
-      position: relative;
+    .risk-alert-container.show {
+      display: block;
     }
     
-    .search-box input {
-      width: 100%;
-      padding: 12px 16px;
-      border: 1px solid #e0e7ff;
-      border-radius: 8px;
-      font-size: 13px;
-      transition: all 0.2s;
-    }
-    
-    .search-box input:focus {
-      outline: none;
-      border-color: #667eea;
-      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-    }
-    
-    .btn {
-      padding: 12px 20px;
-      border: 1px solid #e0e7ff;
-      background: white;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 13px;
-      font-weight: 600;
-      transition: all 0.2s;
+    .risk-alert-container h4 {
+      color: #dc3545;
+      margin-bottom: 16px;
       display: flex;
       align-items: center;
       gap: 8px;
-      white-space: nowrap;
     }
     
-    .btn:hover {
-      border-color: #667eea;
-      background: #f8faff;
-    }
-    
-    .btn-primary {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      border: none;
-      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-    }
-    
-    .btn-primary:hover {
-      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-      transform: translateY(-2px);
-    }
-    
-    select {
-      padding: 12px 16px;
-      border: 1px solid #e0e7ff;
-      border-radius: 8px;
-      font-size: 13px;
+    .risk-alert-item {
+      padding: 12px;
       background: white;
-      cursor: pointer;
-      transition: all 0.2s;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      border-left: 3px solid #dc3545;
+      font-size: 13px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
     }
     
-    select:focus {
-      outline: none;
-      border-color: #667eea;
-      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    .risk-alert-item i {
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+    
+    /* Tab content */
+    .tab-content {
+      display: none;
+    }
+    
+    .tab-content.active {
+      display: block;
     }
     
     /* Table */
-    .table-wrapper {
+    .table-container {
       background: white;
       border-radius: 12px;
       border: 1px solid #e0e7ff;
       overflow: hidden;
       box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-      margin-bottom: 32px;
     }
     
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 13px;
-    }
-    
-    thead {
-      background: linear-gradient(135deg, #f8faff 0%, #f0f4ff 100%);
-      border-bottom: 2px solid #e0e7ff;
     }
     
     th {
+      background: #f8faff;
       padding: 16px;
       text-align: left;
-      font-weight: 600;
-      color: #5f6368;
+      font-size: 12px;
+      font-weight: 700;
+      color: #1a1a2e;
       text-transform: uppercase;
-      font-size: 11px;
       letter-spacing: 0.5px;
+      border-bottom: 2px solid #e0e7ff;
     }
     
     td {
       padding: 16px;
-      border-bottom: 1px solid #f0f4ff;
-      vertical-align: top;
-    }
-    
-    tbody tr {
-      transition: all 0.15s ease;
+      border-bottom: 1px solid #e0e7ff;
+      font-size: 13px;
     }
     
     tbody tr:hover {
       background: #f8faff;
     }
     
-    /* Row Expansion */
-    .expander-btn {
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: #667eea;
-      font-size: 18px;
-      transition: transform 0.3s;
-      width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 6px;
-    }
-    
-    .expander-btn:hover {
-      background: #f0f4ff;
-    }
-    
-    .expander-btn.expanded {
-      transform: rotate(180deg);
-    }
-    
-    /* Expanded Row */
-    .expanded-content {
-      display: none;
-      background: #f8faff;
-      padding: 24px;
-    }
-    
-    .expanded-content.show {
-      display: block;
-    }
-    
-    .checklist-section {
-      margin-top: 20px;
-    }
-    
-    .checklist-title {
-      font-weight: 600;
-      color: #1a1a2e;
-      margin-bottom: 16px;
-      font-size: 14px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    
-    .checklist-items {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 12px;
-    }
-    
-    .checklist-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 12px;
-      background: white;
-      border: 1px solid #e0e7ff;
-      border-radius: 8px;
-      transition: all 0.2s;
-    }
-    
-    .checklist-item:hover {
-      border-color: #667eea;
-      background: #f8faff;
-    }
-    
-    .checklist-item input[type="checkbox"] {
+    .checkbox {
       width: 18px;
       height: 18px;
       cursor: pointer;
       accent-color: #667eea;
     }
     
-    .checklist-item label {
-      cursor: pointer;
-      flex: 1;
-      font-size: 13px;
-    }
-    
-    .checklist-item input[type="checkbox"]:checked + label {
-      color: #7f8c8d;
-      text-decoration: line-through;
-    }
-    
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+    .status-badge {
+      display: inline-block;
       padding: 6px 12px;
-      border-radius: 20px;
+      border-radius: 6px;
       font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
+      font-weight: 600;
+      text-transform: uppercase;
     }
     
-    .badge-success { background: #d4edda; color: #155724; }
-    .badge-warning { background: #fff3cd; color: #856404; }
-    .badge-danger { background: #f8d7da; color: #721c24; }
-    .badge-info { background: #d1ecf1; color: #0c5460; }
-    .badge-primary { background: #d1e7ff; color: #0044cc; }
+    .status-on-track {
+      background: #d4edda;
+      color: #155724;
+    }
     
-    .priority-high { color: #dc3545; font-weight: 700; }
-    .priority-medium { color: #ffc107; font-weight: 700; }
-    .priority-low { color: #28a745; font-weight: 700; }
+    .status-at-risk {
+      background: #fff3cd;
+      color: #856404;
+    }
+    
+    .status-overdue {
+      background: #f8d7da;
+      color: #721c24;
+    }
+    
+    .status-complete {
+      background: #d1e7dd;
+      color: #0f5132;
+    }
     
     /* Modal */
     .modal {
@@ -461,133 +436,468 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0, 0, 0, 0.6);
+      background: rgba(0,0,0,0.6);
       z-index: 1000;
-      align-items: center;
       justify-content: center;
-      backdrop-filter: blur(4px);
+      align-items: center;
     }
     
     .modal.show {
       display: flex;
-      animation: slideUp 0.3s ease;
-    }
-    
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
     }
     
     .modal-content {
       background: white;
-      border-radius: 16px;
+      border-radius: 12px;
       padding: 32px;
-      max-width: 600px;
+      max-width: 500px;
       width: 90%;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
     }
     
-    .modal h2 {
-      margin-bottom: 24px;
-      color: #1a1a2e;
+    .modal-header {
       font-size: 20px;
-    }
-    
-    .modal-field {
+      font-weight: 700;
       margin-bottom: 20px;
+      color: #1a1a2e;
     }
     
-    .modal-field label {
+    .modal-footer {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+      justify-content: flex-end;
+    }
+    
+    .form-group {
+      margin-bottom: 16px;
+    }
+    
+    .form-group label {
       display: block;
       font-size: 13px;
       font-weight: 600;
+      color: #1a1a2e;
       margin-bottom: 8px;
-      color: #5f6368;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
     }
     
-    .modal-field input, .modal-field select, .modal-field textarea {
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
       width: 100%;
-      padding: 12px 16px;
+      padding: 12px;
       border: 1px solid #e0e7ff;
       border-radius: 8px;
       font-size: 13px;
       font-family: inherit;
     }
     
-    .modal-field textarea {
+    .form-group textarea {
       resize: vertical;
       min-height: 100px;
     }
     
-    .modal-actions {
-      display: flex;
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #c41e3a;
+      box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.1);
+    }
+    
+    .expanded-row {
+      background: #f8faff;
+    }
+    
+    .expanded-row td {
+      padding: 24px;
+    }
+    
+    .checkpoint-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
       gap: 12px;
-      justify-content: flex-end;
-      margin-top: 28px;
     }
     
-    .risk-alert {
-      background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%);
-      border-left: 4px solid #dc3545;
-      padding: 20px;
-      border-radius: 12px;
-      margin-bottom: 24px;
-      display: none;
-      box-shadow: 0 4px 15px rgba(220, 53, 69, 0.1);
-    }
-    
-    .risk-alert.show { display: block; }
-    
-    .risk-alert h3 {
-      color: #dc3545;
-      font-size: 14px;
-      margin-bottom: 12px;
-      font-weight: 600;
-    }
-    
-    .risk-alert-item {
-      font-size: 13px;
-      color: #2d3436;
-      padding: 6px 0;
+    .checkpoint-item {
       display: flex;
       align-items: center;
       gap: 8px;
+      padding: 8px;
+      background: white;
+      border-radius: 6px;
+      border: 1px solid #e0e7ff;
     }
     
-    .action-btn {
-      background: none;
-      border: none;
+    .checkpoint-item input {
       cursor: pointer;
-      padding: 8px;
-      color: #667eea;
-      font-size: 16px;
-      border-radius: 6px;
+    }
+    
+    .checkpoint-item label {
+      cursor: pointer;
+      font-size: 12px;
+      margin: 0;
+    }
+
+    /* Editable Checkpoint Styles */
+    .checkpoint-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #e0e7ff;
+    }
+
+    .checkpoint-header h4 {
+      color: #1a1a2e;
+      margin: 0;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .checkpoint-edit-btn {
+      padding: 6px 12px;
+      background: #f0f2f5;
+      color: #c41e3a;
+      border: 1px solid #d0d5dd;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 600;
       transition: all 0.2s;
     }
+
+    .checkpoint-edit-btn:hover {
+      background: #e8eaed;
+    }
+
+    .checkpoint-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
     
-    .action-btn:hover {
-      background: #f0f4ff;
-      color: #764ba2;
+    .checkpoint-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 8px;
+      background: white;
+      border-radius: 6px;
+      border: 1px solid #e0e7ff;
+    }
+    
+    .checkpoint-item input {
+      cursor: pointer;
+      width: 16px;
+      height: 16px;
+    }
+    
+    .checkpoint-item label {
+      cursor: pointer;
+      font-size: 11px;
+      margin: 0;
+      color: #1a1a2e;
+      font-weight: 500;
+    }
+
+    .checkpoint-item-editable {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px;
+      background: #f8faff;
+      border-radius: 6px;
+      border: 1px solid #d0d5dd;
+      margin-bottom: 8px;
+      transition: all 0.2s;
+    }
+
+    .checkpoint-item-editable input[type="text"] {
+      flex: 1;
+      padding: 6px 10px;
+      border: 1px solid #d0d5dd;
+      border-radius: 4px;
+      font-size: 11px;
+      font-family: inherit;
+    }
+
+    .checkpoint-item-editable input[type="text"]:focus {
+      outline: none;
+      border-color: #c41e3a;
+      box-shadow: 0 0 0 2px rgba(196, 30, 58, 0.1);
+    }
+
+    .checkpoint-delete-btn {
+      padding: 4px 8px;
+      background: #ffeaea;
+      color: #dc3545;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 10px;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .checkpoint-delete-btn:hover {
+      background: #ffd4d4;
+    }
+
+    .db-integration-notice {
+      background: #ffe8e8;
+      border: 1px solid #ffc6c6;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-top: 16px;
+      font-size: 11px;
+      color: #c41e3a;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .db-integration-notice i {
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .db-integration-notice strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 48px 24px;
+      color: #7f8c8d;
+    }
+    
+    .empty-state i {
+      font-size: 48px;
+      margin-bottom: 16px;
+      opacity: 0.3;
+    }
+    
+    .empty-state p {
+      font-size: 14px;
     }
     
     @media (max-width: 768px) {
-      .header-stats { display: none; }
-      .analytics-section { grid-template-columns: 1fr; }
-      .controls { flex-direction: column; }
-      th, td { padding: 12px; font-size: 12px; }
+      .toolbar {
+        flex-direction: column;
+      }
+      
+      .search-box {
+        min-width: 100%;
+      }
+      
+      .filter-select {
+        min-width: 100%;
+      }
+      
+      .analytics-section {
+        grid-template-columns: 1fr;
+      }
+      
+      .header-content {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .header-stats {
+        width: 100%;
+        justify-content: space-around;
+      }
+    }
+    /* Login Screen */
+    .login-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, #1a1a2e 0%, #2d2d44 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      backdrop-filter: blur(10px);
+    }
+    
+    .login-screen.hidden {
+      display: none;
+    }
+    
+    .login-box {
+      background: white;
+      border-radius: 16px;
+      padding: 48px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      text-align: center;
+    }
+    
+    .login-box h2 {
+      font-size: 32px;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin-bottom: 12px;
+    }
+    
+    .login-box p {
+      font-size: 14px;
+      color: #7f8c8d;
+      margin-bottom: 32px;
+    }
+    
+    .login-box i {
+      font-size: 64px;
+      color: #c41e3a;
+      margin-bottom: 20px;
+      display: block;
+    }
+    
+    .login-input-group {
+      margin-bottom: 24px;
+    }
+    
+    .login-input-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      color: #1a1a2e;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+      text-align: left;
+    }
+    
+    .login-input-group input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid #e0e7ff;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: 'Courier New', monospace;
+      letter-spacing: 1px;
+      transition: all 0.3s;
+    }
+    
+    .login-input-group input:focus {
+      outline: none;
+      border-color: #c41e3a;
+      box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.15);
+    }
+    
+    .login-btn {
+      width: 100%;
+      padding: 14px 20px;
+      background: linear-gradient(135deg, #c41e3a 0%, #a01830 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .login-btn:hover {
+      box-shadow: 0 8px 20px rgba(196, 30, 58, 0.3);
+      transform: translateY(-2px);
+    }
+    
+    .login-btn:active {
+      transform: translateY(0);
+    }
+    
+    .login-error {
+      background: #f8d7da;
+      color: #721c24;
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 16px;
+      font-size: 13px;
+      display: none;
+      border: 1px solid #f5c6cb;
+    }
+    
+    .login-error.show {
+      display: block;
+      animation: shake 0.5s;
+    }
+    
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      75% { transform: translateX(10px); }
+    }
+    
+    .logout-btn {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      padding: 10px 16px;
+      background: rgba(255,255,255,0.2);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      z-index: 100;
+    }
+    
+    .logout-btn:hover {
+      background: rgba(255,255,255,0.3);
+      border-color: rgba(255,255,255,0.5);
     }
   </style>
 </head>
 <body>
+  <!-- Login Screen -->
+  <div class="login-screen" id="loginScreen">
+    <div class="login-box">
+      <i class="fas fa-lock"></i>
+      <h2>PMO Dashboard</h2>
+      <p>Secure Project Management Access</p>
+      <div class="login-error" id="loginError">
+        <i class="fas fa-exclamation-circle"></i> Incorrect password. Please try again.
+      </div>
+      <div class="login-input-group">
+        <label for="passwordInput">Password</label>
+        <input 
+          type="password" 
+          id="passwordInput" 
+          placeholder="Enter authentication code" 
+          onkeypress="handlePasswordKeypress(event)"
+          autocomplete="off"
+        >
+      </div>
+      <button class="login-btn" onclick="authenticatePassword()">
+        <i class="fas fa-sign-in-alt"></i> Access Dashboard
+      </button>
+    </div>
+  </div>
+
+  <!-- Logout Button (Hidden until authenticated) -->
+  <button class="logout-btn" id="logoutBtn" style="display:none;" onclick="logout()">
+    <i class="fas fa-sign-out-alt"></i> Logout
+  </button>
+
   <div class="container">
-    <!-- Premium Header -->
+    <!-- Header -->
     <div class="header">
       <div class="header-content">
         <div>
-          <h1><i class="fas fa-rocket"></i> Enterprise PMO Dashboard</h1>
-          <p>Intelligent project timeline management & milestone tracking</p>
+          <h1><i class="fas fa-chart-gantt"></i> PMO Dashboard</h1>
+          <p>Real-time project management and risk monitoring</p>
         </div>
         <div class="header-stats">
           <div class="stat-item">
@@ -606,719 +916,518 @@
       </div>
     </div>
 
-    <!-- Tabs -->
+    <!-- Tab Navigation -->
     <div class="tabs-wrapper">
-      <button class="tab-btn active" onclick="switchTab('bo')"><i class="fas fa-briefcase"></i> BO Tasks</button>
-      <button class="tab-btn" onclick="switchTab('pmo')"><i class="fas fa-tasks"></i> PMO Tasks</button>
-      <button class="tab-btn" onclick="switchTab('dpqm')"><i class="fas fa-chart-line"></i> DPQM</button>
-      <button class="tab-btn" onclick="switchTab('pha')"><i class="fas fa-shield-alt"></i> PHA</button>
-      <button class="tab-btn" onclick="switchTab('analytics')"><i class="fas fa-chart-bar"></i> Analytics</button>
+      <button class="tab-btn active" onclick="switchTab('bo')">
+        <i class="fas fa-briefcase"></i> BO Tasks
+      </button>
+      <button class="tab-btn" onclick="switchTab('pmo')">
+        <i class="fas fa-tasks"></i> PMO Tasks
+      </button>
+      <button class="tab-btn" onclick="switchTab('dpqm')">
+        <i class="fas fa-chart-line"></i> DPQM
+      </button>
+      <button class="tab-btn" onclick="switchTab('pha')">
+        <i class="fas fa-calendar"></i> PHA
+      </button>
     </div>
 
-    <!-- BO Tab -->
+    <!-- ===== CONSOLIDATED TOOLBAR (ONE FOR ALL TABS) ===== -->
+    <div class="toolbar-container">
+      <div class="toolbar">
+        <div class="search-box">
+          <input type="text" class="searchInput" placeholder="🔍 Search actions..." id="globalSearch">
+        </div>
+        <select class="filter-select filterMonth" id="globalMonth">
+          <option value="">All Months</option>
+          <option value="1">January</option><option value="2">February</option><option value="3">March</option>
+          <option value="4">April</option><option value="5">May</option><option value="6">June</option>
+          <option value="7">July</option><option value="8">August</option><option value="9">September</option>
+          <option value="10">October</option><option value="11">November</option><option value="12">December</option>
+        </select>
+        <select class="filter-select filterYear" id="globalYear">
+          <option value="">All Years</option>
+          <option value="2024">2024</option>
+          <option value="2025">2025</option>
+          <option value="2026">2026</option>
+        </select>
+        <select class="filter-select filterStatus" id="globalStatus">
+          <option value="">All Status</option>
+          <option value="on-track">On Track</option>
+          <option value="at-risk">At Risk</option>
+          <option value="overdue">Overdue</option>
+          <option value="complete">Complete</option>
+        </select>
+        <button class="btn" onclick="openModal('addTaskModal')">
+          <i class="fas fa-plus"></i> Add Task
+        </button>
+        <button class="btn btn-secondary" onclick="openEmailModal()">
+          <i class="fas fa-envelope"></i> Email Report
+        </button>
+        <button class="btn btn-secondary" onclick="exportPDF()">
+          <i class="fas fa-file-pdf"></i> PDF Export
+        </button>
+      </div>
+    </div>
+
+    <!-- Dynamic Metrics (Updates based on active tab) -->
+    <div class="dashboard">
+      <div class="metric-card" onclick="setFilter('status', '')">
+        <div class="metric-label"><i class="fas fa-tasks"></i> Total Tasks</div>
+        <div class="metric-value" id="tabTotal">0</div>
+        <div class="metric-subtitle" id="tabTotalSub">Active items</div>
+      </div>
+      <div class="metric-card" onclick="setFilter('status', '')">
+        <div class="metric-label"><i class="fas fa-check-circle"></i> Completion</div>
+        <div class="metric-value" id="tabCompletion">0%</div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill" id="tabProgressBar"></div>
+          </div>
+          <span id="tabProgressText">0/0</span>
+        </div>
+      </div>
+      <div class="metric-card" onclick="setFilter('status', 'at-risk')">
+        <div class="metric-label"><i class="fas fa-exclamation-triangle"></i> At Risk</div>
+        <div class="metric-value" id="tabAtRisk">0</div>
+        <div class="metric-subtitle">Due within 3 days</div>
+      </div>
+      <div class="metric-card" onclick="setFilter('status', 'overdue')">
+        <div class="metric-label"><i class="fas fa-calendar-times"></i> Overdue</div>
+        <div class="metric-value" id="tabOverdue">0</div>
+        <div class="metric-subtitle">Past deadline</div>
+      </div>
+    </div>
+
+    <!-- Risk Alert (Dynamic per tab) -->
+    <div class="risk-alert-container" id="riskAlert">
+      <h4><i class="fas fa-exclamation-circle"></i> Active Risks & Issues</h4>
+      <div id="riskItems"></div>
+    </div>
+
+    <!-- Tab Contents -->
     <div class="tab-content active" id="tab-bo">
-      <div class="risk-alert" id="riskAlert-bo">
-        <h3><i class="fas fa-exclamation-circle"></i> Critical Items</h3>
-        <div id="riskItems-bo"></div>
-      </div>
-      
-      <div class="dashboard" id="dashboard-bo"></div>
-      
-      <div class="controls">
-        <div class="search-box">
-          <input type="text" class="searchInput" data-tab="bo" placeholder="🔍 Search actions...">
-        </div>
-        <div style="display: flex; gap: 12px;">
-          <select class="filterMonth" data-tab="bo" onchange="applyFilters('bo')">
-            <option value="">All Months</option>
-            <option value="1">January</option>
-            <option value="2">February</option>
-            <option value="3">March</option>
-            <option value="4">April</option>
-            <option value="5">May</option>
-            <option value="6">June</option>
-            <option value="7">July</option>
-            <option value="8">August</option>
-            <option value="9">September</option>
-            <option value="10">October</option>
-            <option value="11">November</option>
-            <option value="12">December</option>
-          </select>
-          <select class="filterYear" data-tab="bo" onchange="applyFilters('bo')">
-            <option value="">All Years</option>
-            <option value="2024">2024</option>
-            <option value="2025">2025</option>
-            <option value="2026">2026</option>
-          </select>
-          <select class="filterStatus" data-tab="bo" onchange="applyFilters('bo')">
-            <option value="">All Status</option>
-            <option value="completed">Completed</option>
-            <option value="on-track">On Track</option>
-            <option value="at-risk">At Risk</option>
-            <option value="overdue">Overdue</option>
-          </select>
-        </div>
-        <button class="btn btn-primary" onclick="addRow('bo')"><i class="fas fa-plus"></i> Add Task</button>
-        <button class="btn" onclick="openEmailModal('bo')"><i class="fas fa-envelope"></i> Email Report</button>
-        <button class="btn" onclick="exportPDF('bo')"><i class="fas fa-file-pdf"></i> PDF Export</button>
-      </div>
-
-      <div class="table-wrapper">
+      <div class="table-container">
         <table>
           <thead>
             <tr>
-              <th style="width: 5%;"></th>
-              <th style="width: 25%;">Task Name</th>
-              <th style="width: 10%;">Priority</th>
-              <th style="width: 12%;">Start Date</th>
-              <th style="width: 12%;">Status</th>
-              <th style="width: 18%;">Progress</th>
-              <th style="width: 8%;">Actions</th>
+              <th></th>
+              <th>Task Name</th>
+              <th>Priority</th>
+              <th>Start Date</th>
+              <th>Status</th>
+              <th>Progress</th>
+              <th style="text-align: center;">Actions</th>
             </tr>
           </thead>
-          <tbody id="rows-bo"></tbody>
+          <tbody id="table-bo"></tbody>
         </table>
+        <div class="empty-state" id="empty-bo" style="display:none;">
+          <i class="fas fa-inbox"></i>
+          <p>No tasks found</p>
+        </div>
       </div>
     </div>
 
-    <!-- PMO Tab -->
     <div class="tab-content" id="tab-pmo">
-      <div class="risk-alert" id="riskAlert-pmo">
-        <h3><i class="fas fa-exclamation-circle"></i> Critical Items</h3>
-        <div id="riskItems-pmo"></div>
-      </div>
-      
-      <div class="dashboard" id="dashboard-pmo"></div>
-      
-      <div class="controls">
-        <div class="search-box">
-          <input type="text" class="searchInput" data-tab="pmo" placeholder="🔍 Search actions...">
-        </div>
-        <div style="display: flex; gap: 12px;">
-          <select class="filterMonth" data-tab="pmo" onchange="applyFilters('pmo')">
-            <option value="">All Months</option>
-            <option value="1">January</option>
-            <option value="2">February</option>
-            <option value="3">March</option>
-            <option value="4">April</option>
-            <option value="5">May</option>
-            <option value="6">June</option>
-            <option value="7">July</option>
-            <option value="8">August</option>
-            <option value="9">September</option>
-            <option value="10">October</option>
-            <option value="11">November</option>
-            <option value="12">December</option>
-          </select>
-          <select class="filterYear" data-tab="pmo" onchange="applyFilters('pmo')">
-            <option value="">All Years</option>
-            <option value="2024">2024</option>
-            <option value="2025">2025</option>
-            <option value="2026">2026</option>
-          </select>
-          <select class="filterStatus" data-tab="pmo" onchange="applyFilters('pmo')">
-            <option value="">All Status</option>
-            <option value="completed">Completed</option>
-            <option value="on-track">On Track</option>
-            <option value="at-risk">At Risk</option>
-            <option value="overdue">Overdue</option>
-          </select>
-        </div>
-        <button class="btn btn-primary" onclick="addRow('pmo')"><i class="fas fa-plus"></i> Add Task</button>
-        <button class="btn" onclick="openEmailModal('pmo')"><i class="fas fa-envelope"></i> Email Report</button>
-        <button class="btn" onclick="exportPDF('pmo')"><i class="fas fa-file-pdf"></i> PDF Export</button>
-      </div>
-
-      <div class="table-wrapper">
+      <div class="table-container">
         <table>
           <thead>
             <tr>
-              <th style="width: 5%;"></th>
-              <th style="width: 25%;">Task Name</th>
-              <th style="width: 10%;">Priority</th>
-              <th style="width: 12%;">Start Date</th>
-              <th style="width: 12%;">Status</th>
-              <th style="width: 18%;">Progress</th>
-              <th style="width: 8%;">Actions</th>
+              <th></th>
+              <th>Task Name</th>
+              <th>Priority</th>
+              <th>Start Date</th>
+              <th>Status</th>
+              <th>Progress</th>
+              <th style="text-align: center;">Actions</th>
             </tr>
           </thead>
-          <tbody id="rows-pmo"></tbody>
+          <tbody id="table-pmo"></tbody>
         </table>
+        <div class="empty-state" id="empty-pmo" style="display:none;">
+          <i class="fas fa-inbox"></i>
+          <p>No tasks found</p>
+        </div>
       </div>
     </div>
 
-    <!-- DPQM Tab -->
     <div class="tab-content" id="tab-dpqm">
-      <div class="risk-alert" id="riskAlert-dpqm">
-        <h3><i class="fas fa-exclamation-circle"></i> Critical Items</h3>
-        <div id="riskItems-dpqm"></div>
-      </div>
-      
-      <div class="dashboard" id="dashboard-dpqm"></div>
-      
-      <div class="controls">
-        <div class="search-box">
-          <input type="text" class="searchInput" data-tab="dpqm" placeholder="🔍 Search actions...">
-        </div>
-        <div style="display: flex; gap: 12px;">
-          <select class="filterMonth" data-tab="dpqm" onchange="applyFilters('dpqm')">
-            <option value="">All Months</option>
-            <option value="1">January</option>
-            <option value="2">February</option>
-            <option value="3">March</option>
-            <option value="4">April</option>
-            <option value="5">May</option>
-            <option value="6">June</option>
-            <option value="7">July</option>
-            <option value="8">August</option>
-            <option value="9">September</option>
-            <option value="10">October</option>
-            <option value="11">November</option>
-            <option value="12">December</option>
-          </select>
-          <select class="filterYear" data-tab="dpqm" onchange="applyFilters('dpqm')">
-            <option value="">All Years</option>
-            <option value="2024">2024</option>
-            <option value="2025">2025</option>
-            <option value="2026">2026</option>
-          </select>
-          <select class="filterStatus" data-tab="dpqm" onchange="applyFilters('dpqm')">
-            <option value="">All Status</option>
-            <option value="completed">Completed</option>
-            <option value="on-track">On Track</option>
-            <option value="at-risk">At Risk</option>
-            <option value="overdue">Overdue</option>
-          </select>
-        </div>
-        <button class="btn btn-primary" onclick="addRow('dpqm')"><i class="fas fa-plus"></i> Add Task</button>
-        <button class="btn" onclick="openEmailModal('dpqm')"><i class="fas fa-envelope"></i> Email Report</button>
-        <button class="btn" onclick="exportPDF('dpqm')"><i class="fas fa-file-pdf"></i> PDF Export</button>
-      </div>
-
-      <div class="table-wrapper">
+      <div class="table-container">
         <table>
           <thead>
             <tr>
-              <th style="width: 5%;"></th>
-              <th style="width: 25%;">Task Name</th>
-              <th style="width: 10%;">Priority</th>
-              <th style="width: 12%;">Start Date</th>
-              <th style="width: 12%;">Status</th>
-              <th style="width: 18%;">Progress</th>
-              <th style="width: 8%;">Actions</th>
+              <th></th>
+              <th>Task Name</th>
+              <th>Priority</th>
+              <th>Start Date</th>
+              <th>Status</th>
+              <th>Progress</th>
+              <th style="text-align: center;">Actions</th>
             </tr>
           </thead>
-          <tbody id="rows-dpqm"></tbody>
+          <tbody id="table-dpqm"></tbody>
         </table>
+        <div class="empty-state" id="empty-dpqm" style="display:none;">
+          <i class="fas fa-inbox"></i>
+          <p>No tasks found</p>
+        </div>
       </div>
     </div>
 
-    <!-- PHA Tab -->
     <div class="tab-content" id="tab-pha">
-      <div class="risk-alert" id="riskAlert-pha">
-        <h3><i class="fas fa-exclamation-circle"></i> Critical Items</h3>
-        <div id="riskItems-pha"></div>
-      </div>
-      
-      <div class="dashboard" id="dashboard-pha"></div>
-      
-      <div class="controls">
-        <div class="search-box">
-          <input type="text" class="searchInput" data-tab="pha" placeholder="🔍 Search actions...">
-        </div>
-        <div style="display: flex; gap: 12px;">
-          <select class="filterMonth" data-tab="pha" onchange="applyFilters('pha')">
-            <option value="">All Months</option>
-            <option value="1">January</option>
-            <option value="2">February</option>
-            <option value="3">March</option>
-            <option value="4">April</option>
-            <option value="5">May</option>
-            <option value="6">June</option>
-            <option value="7">July</option>
-            <option value="8">August</option>
-            <option value="9">September</option>
-            <option value="10">October</option>
-            <option value="11">November</option>
-            <option value="12">December</option>
-          </select>
-          <select class="filterYear" data-tab="pha" onchange="applyFilters('pha')">
-            <option value="">All Years</option>
-            <option value="2024">2024</option>
-            <option value="2025">2025</option>
-            <option value="2026">2026</option>
-          </select>
-          <select class="filterStatus" data-tab="pha" onchange="applyFilters('pha')">
-            <option value="">All Status</option>
-            <option value="completed">Completed</option>
-            <option value="on-track">On Track</option>
-            <option value="at-risk">At Risk</option>
-            <option value="overdue">Overdue</option>
-          </select>
-        </div>
-        <button class="btn btn-primary" onclick="addRow('pha')"><i class="fas fa-plus"></i> Add Task</button>
-        <button class="btn" onclick="openEmailModal('pha')"><i class="fas fa-envelope"></i> Email Report</button>
-        <button class="btn" onclick="exportPDF('pha')"><i class="fas fa-file-pdf"></i> PDF Export</button>
-      </div>
-
-      <div class="table-wrapper">
+      <div class="table-container">
         <table>
           <thead>
             <tr>
-              <th style="width: 5%;"></th>
-              <th style="width: 25%;">Task Name</th>
-              <th style="width: 10%;">Priority</th>
-              <th style="width: 12%;">Start Date</th>
-              <th style="width: 12%;">Status</th>
-              <th style="width: 18%;">Progress</th>
-              <th style="width: 8%;">Actions</th>
+              <th></th>
+              <th>Task Name</th>
+              <th>Priority</th>
+              <th>Start Date</th>
+              <th>Status</th>
+              <th>Progress</th>
+              <th style="text-align: center;">Actions</th>
             </tr>
           </thead>
-          <tbody id="rows-pha"></tbody>
+          <tbody id="table-pha"></tbody>
         </table>
-      </div>
-    </div>
-
-    <!-- Analytics Tab -->
-    <div class="tab-content" id="tab-analytics">
-      <div class="analytics-section">
-        <div class="analytics-card">
-          <h3><i class="fas fa-chart-line"></i> Portfolio Health</h3>
-          <div class="chart-container">
-            <canvas id="healthChart"></canvas>
-          </div>
-        </div>
-        <div class="analytics-card">
-          <h3><i class="fas fa-tasks"></i> Completion by Category</h3>
-          <div class="chart-container">
-            <canvas id="categoryChart"></canvas>
-          </div>
-        </div>
-      </div>
-      <div class="analytics-section">
-        <div class="analytics-card">
-          <h3><i class="fas fa-exclamation-triangle"></i> Risk Distribution</h3>
-          <div class="chart-container">
-            <canvas id="riskChart"></canvas>
-          </div>
-        </div>
-        <div class="analytics-card">
-          <h3><i class="fas fa-calendar-alt"></i> Timeline</h3>
-          <div id="timelineStats" style="display: grid; gap: 12px;"></div>
+        <div class="empty-state" id="empty-pha" style="display:none;">
+          <i class="fas fa-inbox"></i>
+          <p>No tasks found</p>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Task Modal -->
-  <div class="modal" id="taskModal">
+  <!-- Modals -->
+  <div class="modal" id="addTaskModal">
     <div class="modal-content">
-      <h2><i class="fas fa-tasks"></i> Add New Task</h2>
-      <div class="modal-field">
-        <label>Task Name *</label>
+      <div class="modal-header">Add New Task</div>
+      <div class="form-group">
+        <label>Task Name</label>
         <input type="text" id="taskName" placeholder="Enter task name">
       </div>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-        <div class="modal-field">
-          <label>Priority</label>
-          <select id="taskPriority">
-            <option value="low">Low</option>
-            <option value="medium" selected>Medium</option>
-            <option value="high">High</option>
-          </select>
-        </div>
-        <div class="modal-field">
-          <label>Start Date *</label>
-          <input type="date" id="taskDate">
-        </div>
+      <div class="form-group">
+        <label>Start Date</label>
+        <input type="date" id="taskDate">
       </div>
-      <div class="modal-field">
+      <div class="form-group">
+        <label>Priority</label>
+        <select id="taskPriority">
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+        </select>
+      </div>
+      <div class="form-group">
         <label>Assigned To</label>
         <input type="text" id="taskAssignee" placeholder="Team member name">
       </div>
-      <div class="modal-field">
-        <label>Notes</label>
-        <textarea id="taskNotes" placeholder="Add task details..."></textarea>
-      </div>
-      <div class="modal-actions">
-        <button class="btn" onclick="closeModal('taskModal')">Cancel</button>
-        <button class="btn btn-primary" onclick="saveNewTask()"><i class="fas fa-save"></i> Create Task</button>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('addTaskModal')">Cancel</button>
+        <button class="btn" onclick="saveTask()">Save Task</button>
       </div>
     </div>
   </div>
 
-  <!-- Email Modal -->
   <div class="modal" id="emailModal">
     <div class="modal-content">
-      <h2><i class="fas fa-envelope"></i> Send Report</h2>
-      <div class="modal-field">
-        <label>Email Address *</label>
-        <input type="email" id="emailInput" placeholder="recipient@company.com">
+      <div class="modal-header">Send Email Report</div>
+      <div class="form-group">
+        <label>Recipient Email</label>
+        <input type="email" id="emailInput" placeholder="user@example.com">
       </div>
-      <div class="modal-field">
+      <div class="form-group">
         <label>Report Type</label>
         <select id="emailType">
-          <option value="daily">Daily Summary</option>
-          <option value="overdue">Overdue Items</option>
-          <option value="atrisk">At Risk Items</option>
-          <option value="all">Complete Status</option>
-          <option value="analytics">Analytics Report</option>
+          <option value="all">All Tasks</option>
+          <option value="atrisk">At Risk Only</option>
+          <option value="overdue">Overdue Only</option>
         </select>
       </div>
-      <div class="modal-actions">
-        <button class="btn" onclick="closeModal('emailModal')">Cancel</button>
-        <button class="btn btn-primary" onclick="sendEmail()"><i class="fas fa-paper-plane"></i> Send</button>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('emailModal')">Cancel</button>
+        <button class="btn" onclick="sendEmail()">Send</button>
       </div>
     </div>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script>
+    // Constants
     const CHECKPOINTS = [
-      { label: 'Activity Start', offset: 0 },
-      { label: 'Review 1', offset: 3 },
-      { label: 'Int\'l Review', offset: 4 },
-      { label: 'Final Review', offset: 5 },
-      { label: 'Send Comms', offset: 6 }
+      { label: 'Initiation', offset: 0 },
+      { label: 'Planning', offset: 5 },
+      { label: 'Execution', offset: 15 },
+      { label: 'Monitoring', offset: 25 },
+      { label: 'Closure', offset: 35 }
     ];
 
-    const DUE_DILIGENCE_CHECKLIST = [
-      'Requirement Analysis Complete',
-      'Risk Assessment Done',
-      'Stakeholder Approval',
-      'Resource Allocation',
-      'Documentation Complete',
-      'Quality Assurance Check',
-      'Compliance Review',
-      'Final Sign-off',
-      'Knowledge Transfer',
-      'Post-Implementation Support'
-    ];
+    const PRIORITIES = {
+      high: { label: 'HIGH', color: '#dc3545' },
+      medium: { label: 'MEDIUM', color: '#ffc107' },
+      low: { label: 'LOW', color: '#28a745' }
+    };
 
     let currentTab = 'bo';
-    let currentEmailTab = 'bo';
     let charts = {};
 
-    function formatDate(d) {
-      return d.toISOString().split('T')[0];
-    }
-
     function getToday() {
-      const d = new Date();
-      d.setHours(0, 0, 0, 0);
-      return d;
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      return today;
     }
 
     function getStatus(startDate, checks) {
+      const start = new Date(startDate);
       const today = getToday();
-      let hasOverdue = false;
-      let hasAtRisk = false;
-
-      CHECKPOINTS.forEach((cp, idx) => {
-        const d = new Date(startDate + 'T00:00:00Z');
-        d.setUTCDate(d.getUTCDate() + cp.offset);
-        const diff = (d - today) / (1000 * 60 * 60 * 24);
-
-        if (!checks[idx]) {
-          if (diff < 0) hasOverdue = true;
-          if (diff >= 0 && diff <= 3) hasAtRisk = true;
+      const completed = checks.every(c => c);
+      
+      if (completed) return 'complete';
+      
+      for (let i = 0; i < checks.length; i++) {
+        if (!checks[i]) {
+          const cp = CHECKPOINTS[i];
+          const checkDate = new Date(start);
+          checkDate.setUTCDate(checkDate.getUTCDate() + cp.offset);
+          
+          if (checkDate < today) return 'overdue';
+          if (checkDate - today < 3 * 24 * 60 * 60 * 1000) return 'at-risk';
         }
-      });
-
-      if (checks.every(c => c)) return 'completed';
-      if (hasOverdue) return 'overdue';
-      if (hasAtRisk) return 'at-risk';
+      }
       return 'on-track';
+    }
+
+    function loadData(tab) {
+      const stored = localStorage.getItem(`pmo-${tab}`);
+      return stored ? JSON.parse(stored) : [];
+    }
+
+    function saveData(tab, data) {
+      localStorage.setItem(`pmo-${tab}`, JSON.stringify(data));
     }
 
     function switchTab(tab) {
       currentTab = tab;
-      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-      document.getElementById('tab-' + tab).classList.add('active');
       
-      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
       event.target.classList.add('active');
       
-      if (tab === 'analytics') {
-        renderAnalytics();
-      } else {
-        loadTabData(tab);
-      }
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.getElementById(`tab-${tab}`).classList.add('active');
+      
+      renderTable(tab);
+      updateTabStats(tab);
+      updateRisks(tab);
     }
 
-    function loadTabData(tab) {
-      const tbody = document.getElementById('rows-' + tab);
-      tbody.innerHTML = '';
-      
+    function renderTable(tab) {
       const data = loadData(tab);
+      const tbody = document.getElementById(`table-${tab}`);
+      const empty = document.getElementById(`empty-${tab}`);
+      
       if (data.length === 0) {
-        tbody.innerHTML = `
-          <tr>
+        tbody.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+      }
+      
+      empty.style.display = 'none';
+      tbody.innerHTML = data.map((item, idx) => {
+        const status = getStatus(item.startDate, item.checks);
+        const completed = item.checks.filter(c => c).length;
+        const pct = Math.round((completed / 5) * 100);
+        const statusBadge = `status-${status}`;
+        
+        return `
+          <tr data-tab="${tab}" data-row="${idx}">
+            <td><i class="fas fa-chevron-down" style="cursor:pointer; color:#667eea;" onclick="toggleExpand(this)"></i></td>
+            <td><strong data-action>${item.action}</strong></td>
+            <td><span style="color:${PRIORITIES[item.priority].color}; font-weight:700;">${PRIORITIES[item.priority].label}</span></td>
+            <td data-start-date>${item.startDate}</td>
+            <td><span class="status-badge ${statusBadge}">${status}</span></td>
+            <td><span>${pct}%</span></td>
+            <td style="text-align:center;">
+              <button class="btn btn-secondary" style="padding:6px 12px; font-size:11px;" onclick="editTask('${tab}', ${idx})">
+                <i class="fas fa-edit"></i> Edit
+              </button>
+            </td>
+          </tr>
+          <tr class="expanded-row" style="display:none;">
             <td colspan="7">
-              <div style="text-align: center; padding: 60px 20px; color: #7f8c8d;">
-                <i class="fas fa-inbox" style="font-size: 48px; margin-bottom: 16px; opacity: 0.3;"></i>
-                <p style="font-size: 14px; font-weight: 600; color: #2d3436; margin-top: 16px;">No tasks yet</p>
-                <p>Click "Add Task" to get started</p>
+              <div class="checkpoint-header">
+                <h4>✓ Checkpoints (Editable)</h4>
+                <button class="checkpoint-edit-btn" onclick="toggleCheckpointEdit(this)">
+                  <i class="fas fa-edit"></i> Edit
+                </button>
+              </div>
+              
+              <div class="checkpoint-list" data-tab="${tab}" data-row="${idx}">
+                ${CHECKPOINTS.map((cp, i) => `
+                  <div class="checkpoint-item">
+                    <input type="checkbox" data-check data-tab="${tab}" data-row="${idx}" data-checkpoint="${i}" 
+                           ${item.checks[i] ? 'checked' : ''} onchange="updateCheck('${tab}', ${idx}, ${i})">
+                    <label>${cp.label}</label>
+                  </div>
+                `).join('')}
+              </div>
+
+              <div class="db-integration-notice">
+                <i class="fas fa-database"></i>
+                <div>
+                  <strong>Database Integration Required</strong>
+                  Custom checkpoints will be saved to your database. Connect your backend to persist edits.
+                </div>
+              </div>
+
+              <div style="margin-top:16px; padding-top:16px; border-top:1px solid #e0e7ff;">
+                <div style="font-size:12px; color:#7f8c8d; margin-bottom:8px;"><strong>Assigned:</strong> ${item.assignee || 'Unassigned'}</div>
               </div>
             </td>
           </tr>
         `;
-        updateDashboard(tab);
+      }).join('');
+    }
+
+    function toggleCheckpointEdit(btn) {
+      const checkpointList = btn.closest('.checkpoint-header').nextElementSibling;
+      const isEditing = btn.classList.contains('editing');
+      
+      if (isEditing) {
+        // Exit edit mode
+        btn.classList.remove('editing');
+        btn.innerHTML = '<i class="fas fa-edit"></i> Edit';
+        checkpointList.style.display = 'grid';
+        const editView = checkpointList.nextElementSibling;
+        if (editView?.classList.contains('checkpoint-edit-view')) {
+          editView.style.display = 'none';
+        }
       } else {
-        data.forEach(d => addRowToDOM(tab, d));
-      }
-    }
-
-    function saveData(tab) {
-      const data = [];
-      document.querySelectorAll(`[data-tab="${tab}"][data-row]`).forEach(row => {
-        const id = row.dataset.row;
-        data.push({
-          id,
-          action: row.querySelector('[data-action]').value,
-          priority: row.querySelector('[data-priority]')?.value || 'medium',
-          assignee: row.querySelector('[data-assignee]')?.value || '',
-          notes: row.querySelector('[data-notes]')?.value || '',
-          startDate: row.querySelector('[data-start-date]').value,
-          checks: Array.from(row.querySelectorAll('[data-check]')).map(c => c.checked),
-          diChecklist: Array.from(row.querySelectorAll('[data-di-check]')).map(c => c.checked)
-        });
-      });
-      localStorage.setItem(`pmoData-${tab}`, JSON.stringify(data));
-      renderRows(tab);
-    }
-
-    function loadData(tab) {
-      return JSON.parse(localStorage.getItem(`pmoData-${tab}`) || '[]');
-    }
-
-    function addRow(tab) {
-      document.getElementById('taskName').value = '';
-      document.getElementById('taskDate').value = formatDate(new Date());
-      document.getElementById('taskPriority').value = 'medium';
-      document.getElementById('taskAssignee').value = '';
-      document.getElementById('taskNotes').value = '';
-      
-      currentTab = tab;
-      openModal('taskModal');
-    }
-
-    function saveNewTask() {
-      const name = document.getElementById('taskName').value.trim();
-      const date = document.getElementById('taskDate').value;
-      const priority = document.getElementById('taskPriority').value;
-      const assignee = document.getElementById('taskAssignee').value;
-      const notes = document.getElementById('taskNotes').value;
-
-      if (!name) {
-        alert('Please enter a task name');
-        return;
-      }
-
-      const data = loadData(currentTab);
-      data.push({
-        id: 'r' + Date.now(),
-        action: name,
-        priority,
-        assignee,
-        notes,
-        startDate: date,
-        checks: [false, false, false, false, false],
-        diChecklist: Array(DUE_DILIGENCE_CHECKLIST.length).fill(false)
-      });
-
-      localStorage.setItem(`pmoData-${currentTab}`, JSON.stringify(data));
-      closeModal('taskModal');
-      loadTabData(currentTab);
-    }
-
-    function addRowToDOM(tab, data) {
-      const id = data.id;
-      const priority = data.priority || 'medium';
-
-      const row = document.createElement('tr');
-      row.dataset.tab = tab;
-      row.dataset.row = id;
-
-      const checks = data.checks || [false, false, false, false, false];
-      const diChecklist = data.diChecklist || Array(DUE_DILIGENCE_CHECKLIST.length).fill(false);
-      const status = getStatus(data.startDate, checks);
-      const completedCount = checks.filter(c => c).length;
-      const pct = Math.round((completedCount / CHECKPOINTS.length) * 100);
-
-      let statusBadge = '';
-      if (status === 'completed') {
-        statusBadge = '<span class="badge badge-success"><i class="fas fa-check-circle"></i> Completed</span>';
-      } else if (status === 'overdue') {
-        statusBadge = '<span class="badge badge-danger"><i class="fas fa-exclamation-circle"></i> Overdue</span>';
-      } else if (status === 'at-risk') {
-        statusBadge = '<span class="badge badge-warning"><i class="fas fa-exclamation-triangle"></i> At Risk</span>';
-      } else {
-        statusBadge = '<span class="badge badge-info"><i class="fas fa-arrow-right"></i> On Track</span>';
-      }
-
-      let priorityBadge = `<span class="priority-${priority}"><i class="fas fa-flag"></i> ${priority.toUpperCase()}</span>`;
-
-      row.innerHTML = `
-        <td><button class="expander-btn" onclick="toggleExpand(this, '${tab}', '${id}')"><i class="fas fa-chevron-down"></i></button></td>
-        <td><strong>${data.action}</strong><br><small style="color: #7f8c8d;">${data.assignee ? '👤 ' + data.assignee : ''}</small></td>
-        <td>${priorityBadge}</td>
-        <td>${data.startDate}</td>
-        <td>${statusBadge}</td>
-        <td>
-          <div class="progress-container">
-            <div class="progress-bar"><div class="progress-fill" style="width: ${pct}%"></div></div>
-            <span class="progress-text">${pct}%</span>
-          </div>
-        </td>
-        <td>
-          <button class="action-btn" onclick="deleteRow('${tab}', '${id}')"><i class="fas fa-trash"></i></button>
-        </td>
-      `;
-
-      const expandedRow = document.createElement('tr');
-      expandedRow.dataset.tab = tab;
-      expandedRow.dataset.row = id;
-      expandedRow.className = 'expanded-row';
-      
-      let checklistHtml = '<div class="checklist-items">';
-      DUE_DILIGENCE_CHECKLIST.forEach((item, idx) => {
-        const checked = diChecklist[idx] ? 'checked' : '';
-        checklistHtml += `
-          <div class="checklist-item">
-            <input type="checkbox" id="di-${id}-${idx}" data-di-check ${checked} onchange="saveData('${tab}')">
-            <label for="di-${id}-${idx}">${item}</label>
-          </div>
-        `;
-      });
-      checklistHtml += '</div>';
-
-      let milestoneHtml = '';
-      checks.forEach((c, idx) => {
-        const checked = c ? 'checked' : '';
-        const icon = c ? '<i class="fas fa-check" style="color: #28a745;"></i>' : '<i class="fas fa-circle" style="color: #e0e7ff; font-size: 10px;"></i>';
-        milestoneHtml += `
-          <div class="checklist-item">
-            <input type="checkbox" id="m-${id}-${idx}" data-check ${checked} onchange="saveData('${tab}')">
-            <label for="m-${id}-${idx}">${CHECKPOINTS[idx].label}</label>
-          </div>
-        `;
-      });
-
-      expandedRow.innerHTML = `
-        <td colspan="7">
-          <div class="expanded-content" id="expand-${tab}-${id}">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
-              <div>
-                <div class="checklist-section">
-                  <div class="checklist-title">📋 Milestone Checkpoints</div>
-                  ${milestoneHtml}
-                </div>
-              </div>
-              <div>
-                <div class="checklist-section">
-                  <div class="checklist-title">✅ Due Diligence Checklist</div>
-                  ${checklistHtml}
-                </div>
-              </div>
-            </div>
-            <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #e0e7ff;">
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-                <div>
-                  <label style="font-size: 12px; font-weight: 600; color: #5f6368; text-transform: uppercase;">📝 Notes</label>
-                  <textarea data-notes style="width: 100%; padding: 10px; margin-top: 6px; border: 1px solid #e0e7ff; border-radius: 6px; font-size: 13px;" onchange="saveData('${tab}')">${data.notes || ''}</textarea>
-                </div>
-                <div>
-                  <label style="font-size: 12px; font-weight: 600; color: #5f6368; text-transform: uppercase;">👤 Assigned To</label>
-                  <input type="text" data-assignee value="${data.assignee || ''}" style="width: 100%; padding: 10px; margin-top: 6px; border: 1px solid #e0e7ff; border-radius: 6px; font-size: 13px;" onchange="saveData('${tab}')" placeholder="Team member">
-                </div>
-              </div>
-            </div>
-          </div>
-        </td>
-      `;
-
-      const tbody = document.getElementById('rows-' + tab);
-      tbody.appendChild(row);
-      tbody.appendChild(expandedRow);
-    }
-
-    function toggleExpand(btn, tab, id) {
-      const expanded = document.getElementById(`expand-${tab}-${id}`);
-      expanded.classList.toggle('show');
-      btn.classList.toggle('expanded');
-    }
-
-    function deleteRow(tab, id) {
-      if (confirm('Delete this task?')) {
-        const data = loadData(tab).filter(item => item.id !== id);
-        localStorage.setItem(`pmoData-${tab}`, JSON.stringify(data));
-        loadTabData(tab);
-      }
-    }
-
-    function renderRows(tab) {
-      updateDashboard(tab);
-      updateGlobalStats();
-    }
-
-    function updateDashboard(tab) {
-      const rows = Array.from(document.querySelectorAll(`[data-tab="${tab}"][data-row]`));
-      const total = rows.length;
-      
-      let completed = 0;
-      let atRisk = 0;
-      let overdue = 0;
-
-      rows.forEach(row => {
-        const startDate = row.querySelector('[data-start-date]')?.value;
-        if (!startDate) return;
+        // Enter edit mode
+        btn.classList.add('editing');
+        btn.innerHTML = '<i class="fas fa-check"></i> Done';
+        checkpointList.style.display = 'none';
         
-        const checks = Array.from(row.querySelectorAll('[data-check]')).map(c => c.checked);
-        const status = getStatus(startDate, checks);
-        const allChecked = checks.every(c => c);
-
-        if (allChecked) completed++;
-        if (status === 'at-risk') atRisk++;
-        if (status === 'overdue') overdue++;
-      });
-
-      const completionPct = total === 0 ? 0 : Math.round((completed / total) * 100);
-      const dashboard = document.getElementById('dashboard-' + tab);
-
-      if (dashboard) {
-        dashboard.innerHTML = `
-          <div class="metric-card">
-            <div class="metric-label"><i class="fas fa-tasks"></i> Total Tasks</div>
-            <div class="metric-value">${total}</div>
-            <div class="metric-subtitle">Active items</div>
+        let editView = checkpointList.nextElementSibling;
+        if (!editView?.classList.contains('checkpoint-edit-view')) {
+          editView = document.createElement('div');
+          editView.className = 'checkpoint-edit-view';
+          editView.style.display = 'grid';
+          editView.style.gridTemplateColumns = 'repeat(2, 1fr)';
+          editView.style.gap = '8px';
+          checkpointList.parentNode.insertBefore(editView, checkpointList.nextSibling);
+        }
+        
+        editView.style.display = 'grid';
+        editView.innerHTML = CHECKPOINTS.map((cp, i) => `
+          <div class="checkpoint-item-editable">
+            <input type="text" value="${cp.label}" placeholder="Name" data-index="${i}" style="font-size: 11px; padding: 5px 8px;">
+            <button class="checkpoint-delete-btn" onclick="deleteCheckpoint(${i})" style="padding: 3px 6px;">
+              <i class="fas fa-trash" style="font-size: 10px;"></i>
+            </button>
           </div>
-          <div class="metric-card">
-            <div class="metric-label"><i class="fas fa-check-circle"></i> Completion</div>
-            <div class="metric-value">${completionPct}%</div>
-            <div class="metric-subtitle">
-              <div class="progress-container">
-                <div class="progress-bar"><div class="progress-fill" style="width: ${completionPct}%"></div></div>
-                <span class="progress-text">${completed}/${total}</span>
-              </div>
-            </div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-label"><i class="fas fa-exclamation-triangle"></i> At Risk</div>
-            <div class="metric-value">${atRisk}</div>
-            <div class="metric-subtitle">Due within 3 days</div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-label"><i class="fas fa-calendar-times"></i> Overdue</div>
-            <div class="metric-value">${overdue}</div>
-            <div class="metric-subtitle">Past deadline</div>
-          </div>
+        `).join('') + `
+          <button class="btn" style="grid-column: 1 / -1; padding: 8px 12px; font-size: 11px; margin-top: 4px;" onclick="addCheckpoint()">
+            <i class="fas fa-plus"></i> Add
+          </button>
         `;
       }
+    }
 
-      const risks = getRiskItems(tab);
-      const riskAlert = document.getElementById('riskAlert-' + tab);
-      const riskItems = document.getElementById('riskItems-' + tab);
+    function deleteCheckpoint(index) {
+      if (confirm('Are you sure you want to remove this checkpoint?')) {
+        CHECKPOINTS.splice(index, 1);
+        const btn = event.target.closest('.checkpoint-edit-btn');
+        if (btn) {
+          btn.click();
+          btn.click();
+        }
+      }
+    }
+
+    function addCheckpoint() {
+      const newName = prompt('Enter checkpoint name:');
+      if (newName && newName.trim()) {
+        CHECKPOINTS.push({
+          label: newName.trim(),
+          offset: CHECKPOINTS.length * 10
+        });
+        
+        // Refresh the edit view with the new checkpoint
+        const btn = event.target.closest('.checkpoint-edit-btn') || 
+                   document.querySelector('.checkpoint-edit-btn.editing');
+        if (btn) {
+          const checkpointList = btn.closest('.checkpoint-header').nextElementSibling;
+          const editView = checkpointList.nextElementSibling;
+          
+          if (editView?.classList.contains('checkpoint-edit-view')) {
+            editView.innerHTML = CHECKPOINTS.map((cp, i) => `
+              <div class="checkpoint-item-editable">
+                <input type="text" value="${cp.label}" placeholder="Name" data-index="${i}" style="font-size: 11px; padding: 5px 8px;">
+                <button class="checkpoint-delete-btn" onclick="deleteCheckpoint(${i})" style="padding: 3px 6px;">
+                  <i class="fas fa-trash" style="font-size: 10px;"></i>
+                </button>
+              </div>
+            `).join('') + `
+              <button class="btn" style="grid-column: 1 / -1; padding: 8px 12px; font-size: 11px; margin-top: 4px;" onclick="addCheckpoint()">
+                <i class="fas fa-plus"></i> Add
+              </button>
+            `;
+          }
+        }
+      }
+    }
+
+    function toggleExpand(el) {
+      const row = el.closest('tr');
+      const next = row.nextElementSibling;
+      if (next?.classList.contains('expanded-row')) {
+        next.style.display = next.style.display === 'none' ? '' : 'none';
+        el.style.transform = next.style.display === 'none' ? 'rotate(0deg)' : 'rotate(-180deg)';
+      }
+    }
+
+    function updateTabStats(tab) {
+      const data = loadData(tab);
+      const total = data.length;
+      const completed = data.filter(item => item.checks.every(c => c)).length;
+      const atRisk = data.filter(item => {
+        const s = getStatus(item.startDate, item.checks);
+        return s === 'at-risk' || s === 'overdue';
+      }).length;
+      const overdue = data.filter(item => getStatus(item.startDate, item.checks) === 'overdue').length;
+      
+      document.getElementById('tabTotal').textContent = total;
+      document.getElementById('tabTotalSub').textContent = `${total} active items`;
+      document.getElementById('tabCompletion').textContent = (total === 0 ? 0 : Math.round((completed / total) * 100)) + '%';
+      document.getElementById('tabProgressBar').style.width = (total === 0 ? 0 : Math.round((completed / total) * 100)) + '%';
+      document.getElementById('tabProgressText').textContent = `${completed}/${total}`;
+      document.getElementById('tabAtRisk').textContent = atRisk;
+      document.getElementById('tabOverdue').textContent = overdue;
+    }
+
+    function updateRisks(tab) {
+      const risks = [];
+      const data = loadData(tab);
+      
+      data.forEach(item => {
+        const status = getStatus(item.startDate, item.checks);
+        if (status === 'overdue') {
+          CHECKPOINTS.forEach((cp, idx) => {
+            if (!item.checks[idx]) {
+              const d = new Date(item.startDate + 'T00:00:00Z');
+              d.setUTCDate(d.getUTCDate() + cp.offset);
+              const diff = (d - getToday()) / (1000 * 60 * 60 * 24);
+              if (diff < 0) {
+                risks.push(`<div class="risk-alert-item"><i class="fas fa-times-circle"></i> <strong>${item.action}</strong> - ${cp.label} overdue by ${Math.abs(Math.floor(diff))} days</div>`);
+              }
+            }
+          });
+        }
+      });
+      
+      const riskAlert = document.getElementById('riskAlert');
+      const riskItems = document.getElementById('riskItems');
+      
       if (risks.length > 0) {
         riskAlert.classList.add('show');
         riskItems.innerHTML = risks.join('');
@@ -1327,30 +1436,14 @@
       }
     }
 
-    function getRiskItems(tab) {
-      const risks = [];
-      document.querySelectorAll(`[data-tab="${tab}"][data-row]`).forEach(row => {
-        const action = row.querySelector('[data-action]')?.value;
-        const startDate = row.querySelector('[data-start-date]')?.value;
-        if (!action || !startDate) return;
-        
-        const checks = Array.from(row.querySelectorAll('[data-check]')).map(c => c.checked);
-        const status = getStatus(startDate, checks);
-
-        if (status === 'overdue') {
-          CHECKPOINTS.forEach((cp, idx) => {
-            if (!checks[idx]) {
-              const d = new Date(startDate + 'T00:00:00Z');
-              d.setUTCDate(d.getUTCDate() + cp.offset);
-              const diff = (d - getToday()) / (1000 * 60 * 60 * 24);
-              if (diff < 0) {
-                risks.push(`<div class="risk-alert-item"><i class="fas fa-times-circle" style="color: #dc3545;"></i> <strong>${action}</strong> - ${cp.label} overdue by ${Math.abs(Math.floor(diff))} days</div>`);
-              }
-            }
-          });
-        }
-      });
-      return risks;
+    function updateCheck(tab, row, checkpoint) {
+      const data = loadData(tab);
+      data[row].checks[checkpoint] = !data[row].checks[checkpoint];
+      saveData(tab, data);
+      renderTable(tab);
+      updateTabStats(tab);
+      updateRisks(tab);
+      updateGlobalStats();
     }
 
     function updateGlobalStats() {
@@ -1361,7 +1454,6 @@
       ['bo', 'pmo', 'dpqm', 'pha'].forEach(tab => {
         const data = loadData(tab);
         globalTotal += data.length;
-
         data.forEach(item => {
           if (item.checks.every(c => c)) globalCompleted++;
           if (getStatus(item.startDate, item.checks) === 'at-risk' || getStatus(item.startDate, item.checks) === 'overdue') {
@@ -1376,40 +1468,47 @@
       document.getElementById('globalRisk').textContent = globalRisk;
     }
 
-    function applyFilters(tab) {
-      const searchInput = document.querySelector(`input[data-tab="${tab}"].searchInput`);
-      const filterMonth = document.querySelector(`select[data-tab="${tab}"].filterMonth`);
-      const filterYear = document.querySelector(`select[data-tab="${tab}"].filterYear`);
-      const filterStatus = document.querySelector(`select[data-tab="${tab}"].filterStatus`);
+    function applyGlobalFilters() {
+      const search = document.getElementById('globalSearch').value.toLowerCase();
+      const month = document.getElementById('globalMonth').value;
+      const year = document.getElementById('globalYear').value;
+      const status = document.getElementById('globalStatus').value;
 
-      const query = searchInput?.value.toLowerCase() || '';
-      const month = filterMonth?.value || '';
-      const year = filterYear?.value || '';
-      const status = filterStatus?.value || '';
-
-      document.querySelectorAll(`[data-tab="${tab}"][data-row]`).forEach(row => {
-        const action = row.querySelector('[data-action]')?.value.toLowerCase() || '';
-        const startDate = row.querySelector('[data-start-date]')?.value || '';
-        const checks = Array.from(row.querySelectorAll('[data-check]')).map(c => c.checked);
-        const rowStatus = getStatus(startDate, checks);
-
-        const d = new Date(startDate);
+      const data = loadData(currentTab);
+      const tbody = document.getElementById(`table-${currentTab}`);
+      
+      let visibleCount = 0;
+      tbody.querySelectorAll('tr[data-row]').forEach((row, idx) => {
+        const item = data[idx];
+        const action = item.action.toLowerCase();
+        const d = new Date(item.startDate);
         const rowMonth = String(d.getMonth() + 1);
         const rowYear = String(d.getFullYear());
+        const rowStatus = getStatus(item.startDate, item.checks);
 
         let show = true;
-
-        if (query && !action.includes(query)) show = false;
+        if (search && !action.includes(search)) show = false;
         if (month && rowMonth !== month) show = false;
         if (year && rowYear !== year) show = false;
         if (status && rowStatus !== status) show = false;
 
         row.style.display = show ? '' : 'none';
         const nextRow = row.nextElementSibling;
-        if (nextRow?.className === 'expanded-row') {
+        if (nextRow?.classList.contains('expanded-row')) {
           nextRow.style.display = show ? '' : 'none';
         }
+        if (show) visibleCount++;
       });
+
+      const empty = document.getElementById(`empty-${currentTab}`);
+      empty.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+
+    function setFilter(type, value) {
+      if (type === 'status') {
+        document.getElementById('globalStatus').value = value;
+      }
+      applyGlobalFilters();
     }
 
     function openModal(id) {
@@ -1420,8 +1519,43 @@
       document.getElementById(id).classList.remove('show');
     }
 
-    function openEmailModal(tab) {
-      currentEmailTab = tab;
+    function saveTask() {
+      const name = document.getElementById('taskName').value;
+      const date = document.getElementById('taskDate').value;
+      const priority = document.getElementById('taskPriority').value;
+      const assignee = document.getElementById('taskAssignee').value;
+
+      if (!name || !date) {
+        alert('Please fill in all required fields');
+        return;
+      }
+
+      const data = loadData(currentTab);
+      data.push({
+        action: name,
+        startDate: date,
+        priority: priority,
+        assignee: assignee,
+        checks: [false, false, false, false, false]
+      });
+      saveData(currentTab, data);
+      
+      document.getElementById('taskName').value = '';
+      document.getElementById('taskDate').value = '';
+      document.getElementById('taskPriority').value = 'medium';
+      document.getElementById('taskAssignee').value = '';
+      
+      closeModal('addTaskModal');
+      renderTable(currentTab);
+      updateTabStats(currentTab);
+      updateGlobalStats();
+    }
+
+    function editTask(tab, idx) {
+      alert('Edit functionality - integrate with your backend');
+    }
+
+    function openEmailModal() {
       openModal('emailModal');
     }
 
@@ -1434,8 +1568,8 @@
         return;
       }
 
-      const data = loadData(currentEmailTab);
-      let body = `PMO Report - ${currentEmailTab.toUpperCase()} (${type})\n`;
+      const data = loadData(currentTab);
+      let body = `PMO Report - ${currentTab.toUpperCase()} (${type})\n`;
       body += `Generated: ${new Date().toLocaleString()}\n\n`;
 
       data.forEach(item => {
@@ -1453,9 +1587,9 @@
       closeModal('emailModal');
     }
 
-    function exportPDF(tab) {
-      const data = loadData(tab);
-      let html = `<h1>PMO Report - ${tab.toUpperCase()}</h1><p>Generated: ${new Date().toLocaleString()}</p><table style="width:100%; border-collapse: collapse;">`;
+    function exportPDF() {
+      const data = loadData(currentTab);
+      let html = `<h1>PMO Report - ${currentTab.toUpperCase()}</h1><p>Generated: ${new Date().toLocaleString()}</p><table style="width:100%; border-collapse: collapse;">`;
       html += '<tr style="border: 1px solid #ddd;"><th style="border: 1px solid #ddd; padding: 8px;">Task</th><th style="border: 1px solid #ddd; padding: 8px;">Status</th><th style="border: 1px solid #ddd; padding: 8px;">Progress</th></tr>';
 
       data.forEach(item => {
@@ -1471,7 +1605,7 @@
 
       const opt = {
         margin: 10,
-        filename: `pmo-report-${tab}-${new Date().toISOString().split('T')[0]}.pdf`,
+        filename: `pmo-report-${currentTab}-${new Date().toISOString().split('T')[0]}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 2 },
         jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
@@ -1480,96 +1614,87 @@
       html2pdf().set(opt).from(element).save();
     }
 
-    function renderAnalytics() {
-      const categories = ['bo', 'pmo', 'dpqm', 'pha'];
-      const completion = [];
-      const atRisk = [];
-      const categoryLabels = ['BO Tasks', 'PMO Tasks', 'DPQM', 'PHA'];
+    // ===== AUTHENTICATION FUNCTIONS =====
+    const CORRECT_PASSWORD = 'pmo2026';
 
-      categories.forEach(cat => {
-        const data = loadData(cat);
-        const total = data.length;
-        const completed = data.filter(item => item.checks.every(c => c)).length;
-        const risk = data.filter(item => getStatus(item.startDate, item.checks) === 'at-risk' || getStatus(item.startDate, item.checks) === 'overdue').length;
+    function checkAuthentication() {
+      const isAuthenticated = sessionStorage.getItem('pmo-authenticated');
+      if (isAuthenticated === 'true') {
+        unlockDashboard();
+      } else {
+        lockDashboard();
+      }
+    }
 
-        completion.push(total === 0 ? 0 : Math.round((completed / total) * 100));
-        atRisk.push(risk);
+    function authenticatePassword() {
+      const passwordInput = document.getElementById('passwordInput');
+      const password = passwordInput.value;
+      const loginError = document.getElementById('loginError');
+
+      if (password === CORRECT_PASSWORD) {
+        sessionStorage.setItem('pmo-authenticated', 'true');
+        loginError.classList.remove('show');
+        unlockDashboard();
+      } else {
+        loginError.classList.add('show');
+        passwordInput.value = '';
+        passwordInput.focus();
+        
+        // Remove error message after 3 seconds
+        setTimeout(() => {
+          loginError.classList.remove('show');
+        }, 3000);
+      }
+    }
+
+    function handlePasswordKeypress(event) {
+      if (event.key === 'Enter') {
+        authenticatePassword();
+      }
+    }
+
+    function unlockDashboard() {
+      document.getElementById('loginScreen').classList.add('hidden');
+      document.getElementById('logoutBtn').style.display = 'block';
+      
+      // Initialize dashboard
+      ['bo', 'pmo', 'dpqm', 'pha'].forEach(tab => {
+        const data = loadData(tab);
+        if (data.length === 0) {
+          saveData(tab, [
+            { action: 'Sample Task', startDate: '2026-06-15', priority: 'high', assignee: 'Team', checks: [false, false, false, false, false] }
+          ]);
+        }
       });
 
-      // Health Chart
-      if (charts.health) charts.health.destroy();
-      const healthCtx = document.getElementById('healthChart').getContext('2d');
-      charts.health = new Chart(healthCtx, {
-        type: 'line',
-        data: {
-          labels: categoryLabels,
-          datasets: [{
-            label: 'Completion %',
-            data: completion,
-            borderColor: '#667eea',
-            backgroundColor: 'rgba(102, 126, 234, 0.1)',
-            tension: 0.4,
-            fill: true,
-            pointRadius: 6,
-            pointBackgroundColor: '#667eea'
-          }]
-        },
-        options: { responsive: true, maintainAspectRatio: false }
-      });
+      renderTable('bo');
+      updateTabStats('bo');
+      updateRisks('bo');
+      updateGlobalStats();
+    }
 
-      // Category Chart
-      if (charts.category) charts.category.destroy();
-      const categoryCtx = document.getElementById('categoryChart').getContext('2d');
-      charts.category = new Chart(categoryCtx, {
-        type: 'doughnut',
-        data: {
-          labels: categoryLabels,
-          datasets: [{
-            data: completion,
-            backgroundColor: ['#667eea', '#764ba2', '#f093fb', '#4facfe']
-          }]
-        },
-        options: { responsive: true, maintainAspectRatio: false }
-      });
+    function lockDashboard() {
+      document.getElementById('loginScreen').classList.remove('hidden');
+      document.getElementById('logoutBtn').style.display = 'none';
+      document.getElementById('passwordInput').value = '';
+      document.getElementById('passwordInput').focus();
+    }
 
-      // Risk Chart
-      if (charts.risk) charts.risk.destroy();
-      const riskCtx = document.getElementById('riskChart').getContext('2d');
-      charts.risk = new Chart(riskCtx, {
-        type: 'bar',
-        data: {
-          labels: categoryLabels,
-          datasets: [{
-            label: 'At Risk Items',
-            data: atRisk,
-            backgroundColor: '#dc3545'
-          }]
-        },
-        options: { responsive: true, maintainAspectRatio: false }
-      });
-
-      // Timeline Stats
-      const timelineStats = document.getElementById('timelineStats');
-      timelineStats.innerHTML = categories.map((cat, i) => `
-        <div style="background: #f8faff; padding: 16px; border-radius: 8px; border-left: 4px solid #667eea;">
-          <div style="font-weight: 600; color: #1a1a2e;">${categoryLabels[i]}</div>
-          <div style="font-size: 24px; color: #667eea; font-weight: 700; margin: 8px 0;">${completion[i]}%</div>
-          <div style="font-size: 12px; color: #7f8c8d;">${atRisk[i]} at-risk items</div>
-        </div>
-      `).join('');
+    function logout() {
+      if (confirm('Are you sure you want to logout?')) {
+        sessionStorage.removeItem('pmo-authenticated');
+        lockDashboard();
+      }
     }
 
     // Event Listeners
-    document.addEventListener('click', e => {
-      if (e.target.classList.contains('searchInput')) {
-        const tab = e.target.dataset.tab;
-        applyFilters(tab);
-      }
-    });
+    document.getElementById('globalSearch').addEventListener('input', applyGlobalFilters);
+    document.getElementById('globalMonth').addEventListener('change', applyGlobalFilters);
+    document.getElementById('globalYear').addEventListener('change', applyGlobalFilters);
+    document.getElementById('globalStatus').addEventListener('change', applyGlobalFilters);
 
-    // Initialize
-    ['bo', 'pmo', 'dpqm', 'pha'].forEach(tab => loadTabData(tab));
-    updateGlobalStats();
+    // Check authentication on page load
+    checkAuthentication();
   </script>
 </body>
 </html>
