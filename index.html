@@ -3,178 +3,179 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Enterprise PMO Dashboard - Intelligent Project Management</title>
+  <title>PMO Dashboard</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body { 
-      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif; 
-      background: linear-gradient(135deg, #0f172a 0%, #1a2847 100%); 
-      color: #1a1a2e;
-      min-height: 100vh;
-    }
     
-    .sidebar { display: none; }
+    body { 
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+      min-height: 100vh;
+      color: #2c3e50;
+    }
     
     .container { 
-      max-width: 1800px; 
+      max-width: 1400px; 
       margin: 0 auto; 
       padding: 24px;
+      padding-top: 80px;
     }
-    
-    /* Premium Header */
+
+    /* Logout Button - In Header */
+    .logout-btn {
+      display: none;
+    }
+
+    /* Header */
     .header {
-      background: linear-gradient(135deg, #1a1a2e 0%, #2d2d44 100%);
-      color: white;
-      padding: 40px 32px;
-      border-radius: 16px;
+      background: white;
+      padding: 32px;
+      border-radius: 12px;
       margin-bottom: 32px;
-      box-shadow: 0 20px 60px rgba(26, 26, 46, 0.4);
-      position: relative;
-      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      border-left: 5px solid #c41e3a;
     }
-    
-    .header::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      right: -10%;
-      width: 500px;
-      height: 500px;
-      background: rgba(255,255,255,0.05);
-      border-radius: 50%;
-      filter: blur(40px);
+
+    .header h1 {
+      font-size: 32px;
+      font-weight: 700;
+      color: #2c3e50;
+      margin-bottom: 8px;
     }
-    
-    .header-content {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 24px;
+
+    .header p {
+      font-size: 14px;
+      color: #7f8c8d;
     }
-    
-    .header h1 { font-size: 36px; font-weight: 700; margin-bottom: 8px; }
-    .header p { font-size: 14px; opacity: 0.9; }
-    
+
     .header-stats {
       display: flex;
-      gap: 24px;
+      gap: 40px;
+      margin-top: 24px;
     }
-    
+
     .stat-item {
-      text-align: right;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
-    
-    .stat-value { font-size: 28px; font-weight: 700; }
-    .stat-label { font-size: 12px; opacity: 0.8; text-transform: uppercase; letter-spacing: 1px; }
-    
+
+    .stat-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: #c41e3a;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: #95a5a6;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+    }
+
     /* Tabs */
     .tabs-wrapper {
       display: flex;
       gap: 8px;
       margin-bottom: 32px;
-      background: rgba(255,255,255,0.95);
+      background: white;
       padding: 12px;
       border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
       flex-wrap: wrap;
     }
-    
+
     .tab-btn {
       padding: 12px 24px;
       background: transparent;
-      border: 2px solid transparent;
+      border: none;
       cursor: pointer;
       font-size: 13px;
       font-weight: 600;
-      color: #5f6368;
+      color: #7f8c8d;
       border-radius: 8px;
       transition: all 0.3s;
       text-transform: uppercase;
       letter-spacing: 0.5px;
       flex: 1;
-      min-width: 150px;
+      min-width: 120px;
     }
-    
+
     .tab-btn:hover {
-      background: #f0f2f5;
+      background: #f5f7fa;
     }
-    
+
     .tab-btn.active {
-      background: linear-gradient(135deg, #c41e3a 0%, #a01830 100%);
+      background: #c41e3a;
       color: white;
-      border-color: transparent;
-      box-shadow: 0 8px 20px rgba(196, 30, 58, 0.3);
+      box-shadow: 0 4px 12px rgba(196, 30, 58, 0.2);
     }
-    
-    /* ===== CONSOLIDATED TOOLBAR (ONE PER PAGE) ===== */
+
+    /* Toolbar */
     .toolbar-container {
       background: white;
       padding: 20px;
       border-radius: 12px;
       margin-bottom: 32px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     }
-    
+
     .toolbar {
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
       align-items: center;
     }
-    
+
     .search-box {
       flex: 1;
       min-width: 250px;
-      position: relative;
     }
-    
+
     .search-box input {
       width: 100%;
-      padding: 12px 16px;
+      padding: 10px 14px;
       border: 1px solid #e0e7ff;
-      border-radius: 8px;
+      border-radius: 6px;
       font-size: 13px;
       transition: all 0.2s;
     }
-    
+
     .search-box input:focus {
       outline: none;
       border-color: #c41e3a;
       box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.1);
     }
-    
+
     .filter-select {
-      padding: 10px 16px;
+      padding: 10px 14px;
       border: 1px solid #e0e7ff;
-      border-radius: 8px;
+      border-radius: 6px;
       font-size: 13px;
       cursor: pointer;
       background: white;
-      transition: all 0.2s;
-      min-width: 130px;
+      font-weight: 500;
+      min-width: 120px;
     }
-    
+
     .filter-select:focus {
       outline: none;
       border-color: #c41e3a;
       box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.1);
     }
-    
+
     .btn {
       padding: 10px 18px;
-      background: linear-gradient(135deg, #c41e3a 0%, #a01830 100%);
+      background: #c41e3a;
       color: white;
       border: none;
-      border-radius: 8px;
+      border-radius: 6px;
       cursor: pointer;
       font-size: 12px;
-      font-weight: 600;
+      font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.5px;
       transition: all 0.3s;
@@ -183,251 +184,243 @@
       gap: 8px;
       white-space: nowrap;
     }
-    
+
     .btn:hover {
-      box-shadow: 0 8px 20px rgba(196, 30, 58, 0.3);
-      transform: translateY(-2px);
+      background: #a01830;
     }
-    
+
     .btn-secondary {
       background: white;
       color: #c41e3a;
-      border: 1px solid #e0e7ff;
+      border: 1px solid #c41e3a;
     }
-    
-    .btn-secondary:hover {
-      background: #f8faff;
-    }
-    
-    /* Dashboard Grid */
-    .dashboard {
+
+    /* Metrics */
+    .metrics-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 16px;
       margin-bottom: 32px;
     }
-    
+
     .metric-card {
       background: white;
       border-radius: 12px;
       padding: 24px;
-      border: 1px solid #e0e7ff;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      border-left: 4px solid #c41e3a;
       cursor: pointer;
+      transition: all 0.3s;
     }
-    
-    .metric-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, #c41e3a 0%, #a01830 100%);
-    }
-    
+
     .metric-card:hover {
-      box-shadow: 0 12px 30px rgba(196, 30, 58, 0.15);
-      transform: translateY(-4px);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
     }
-    
+
     .metric-label {
-      font-size: 11px;
-      font-weight: 700;
-      color: #7f8c8d;
+      font-size: 12px;
+      font-weight: 600;
+      color: #95a5a6;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 0.5px;
       margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
     }
-    
+
     .metric-value {
       font-size: 36px;
       font-weight: 700;
-      color: #1a1a2e;
+      color: #c41e3a;
       margin-bottom: 8px;
     }
-    
+
     .metric-subtitle {
       font-size: 12px;
-      color: #7f8c8d;
+      color: #95a5a6;
     }
-    
+
     .progress-container {
       display: flex;
       align-items: center;
-      gap: 12px;
-      margin-top: 8px;
+      gap: 10px;
+      margin-top: 12px;
     }
-    
+
     .progress-bar {
       flex: 1;
       height: 6px;
-      background: #e0e7ff;
+      background: #ecf0f1;
       border-radius: 3px;
       overflow: hidden;
     }
-    
+
     .progress-fill {
       height: 100%;
-      background: linear-gradient(90deg, #c41e3a 0%, #a01830 100%);
-      transition: width 0.3s ease;
+      background: #c41e3a;
     }
-    
-    /* Analytics Section */
-    .analytics-section {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 24px;
-      margin-bottom: 32px;
-    }
-    
-    .analytics-card {
-      background: white;
-      border-radius: 12px;
-      padding: 24px;
-      border: 1px solid #e0e7ff;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-    }
-    
-    .analytics-card h3 {
-      margin-bottom: 20px;
-      font-size: 16px;
-      font-weight: 600;
-      color: #1a1a2e;
-    }
-    
-    .chart-container {
-      position: relative;
-      height: 300px;
-      margin-bottom: 20px;
-    }
-    
-    /* Risk Alert */
-    .risk-alert-container {
-      background: #fff5f5;
-      border: 1px solid #fecccb;
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 24px;
-      display: none;
-    }
-    
-    .risk-alert-container.show {
-      display: block;
-    }
-    
-    .risk-alert-container h4 {
-      color: #dc3545;
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    
-    .risk-alert-item {
-      padding: 12px;
-      background: white;
-      border-radius: 8px;
-      margin-bottom: 8px;
-      border-left: 3px solid #dc3545;
-      font-size: 13px;
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-    }
-    
-    .risk-alert-item i {
-      flex-shrink: 0;
-      margin-top: 3px;
-    }
-    
-    /* Tab content */
-    .tab-content {
-      display: none;
-    }
-    
-    .tab-content.active {
-      display: block;
-    }
-    
+
     /* Table */
     .table-container {
       background: white;
       border-radius: 12px;
-      border: 1px solid #e0e7ff;
       overflow: hidden;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     }
-    
+
     table {
       width: 100%;
       border-collapse: collapse;
     }
-    
+
     th {
-      background: #f8faff;
-      padding: 16px;
+      background: #f8f9fa;
+      padding: 16px 20px;
       text-align: left;
       font-size: 12px;
       font-weight: 700;
-      color: #1a1a2e;
+      color: #2c3e50;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      border-bottom: 2px solid #e0e7ff;
+      border-bottom: 2px solid #e8eef5;
     }
-    
+
     td {
-      padding: 16px;
-      border-bottom: 1px solid #e0e7ff;
+      padding: 16px 20px;
+      border-bottom: 1px solid #f0f2f5;
       font-size: 13px;
     }
-    
+
     tbody tr:hover {
       background: #f8faff;
     }
-    
-    .checkbox {
-      width: 18px;
-      height: 18px;
+
+    .task-name {
+      font-weight: 600;
+      color: #2c3e50;
       cursor: pointer;
-      accent-color: #667eea;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
-    
+
+    .task-name input {
+      padding: 6px 10px;
+      border: 1px solid #c41e3a;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .task-name input:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.1);
+    }
+
+    .task-edit-icon {
+      opacity: 0;
+      cursor: pointer;
+      color: #c41e3a;
+      font-size: 12px;
+      transition: opacity 0.2s;
+    }
+
+    tbody tr:hover .task-edit-icon {
+      opacity: 1;
+    }
+
     .status-badge {
       display: inline-block;
       padding: 6px 12px;
       border-radius: 6px;
       font-size: 11px;
-      font-weight: 600;
+      font-weight: 700;
       text-transform: uppercase;
     }
-    
-    .status-on-track {
-      background: #d4edda;
-      color: #155724;
+
+    .status-on-track { background: #d4edda; color: #155724; }
+    .status-at-risk { background: #fff3cd; color: #856404; }
+    .status-overdue { background: #f8d7da; color: #721c24; }
+    .status-complete { background: #d1e7dd; color: #0f5132; }
+
+    /* Expanded Row */
+    .expanded-row {
+      background: #f8faff;
     }
-    
-    .status-at-risk {
-      background: #fff3cd;
-      color: #856404;
+
+    .expanded-row td {
+      padding: 24px 20px;
+      border-bottom: 1px solid #f0f2f5;
     }
-    
-    .status-overdue {
-      background: #f8d7da;
-      color: #721c24;
+
+    /* Checkpoints */
+    .checkpoint-section h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #2c3e50;
+      margin-bottom: 16px;
     }
-    
-    .status-complete {
-      background: #d1e7dd;
-      color: #0f5132;
+
+    .checkpoint-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
     }
-    
+
+    .checkpoint-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      background: white;
+      border-radius: 6px;
+      border: 1px solid #e8eef5;
+      transition: all 0.2s;
+    }
+
+    .checkpoint-item:hover {
+      border-color: #c41e3a;
+      background: #fff9f9;
+    }
+
+    .checkpoint-item input {
+      cursor: pointer;
+      width: 16px;
+      height: 16px;
+      accent-color: #c41e3a;
+    }
+
+    .checkpoint-item label {
+      cursor: pointer;
+      font-size: 12px;
+      margin: 0;
+      color: #2c3e50;
+      font-weight: 500;
+    }
+
+    .db-notice {
+      background: #ffe8e8;
+      border: 1px solid #ffc6c6;
+      border-radius: 6px;
+      padding: 12px;
+      font-size: 11px;
+      color: #c41e3a;
+      margin-top: 12px;
+      font-weight: 500;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 48px 24px;
+      color: #95a5a6;
+    }
+
+    .empty-state i {
+      font-size: 48px;
+      margin-bottom: 16px;
+      opacity: 0.3;
+    }
+
     /* Modal */
     .modal {
       display: none;
@@ -436,386 +429,154 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0,0,0,0.6);
+      background: rgba(0, 0, 0, 0.5);
       z-index: 1000;
       justify-content: center;
       align-items: center;
     }
-    
+
     .modal.show {
       display: flex;
     }
-    
+
     .modal-content {
       background: white;
       border-radius: 12px;
       padding: 32px;
       max-width: 500px;
       width: 90%;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     }
-    
+
     .modal-header {
       font-size: 20px;
       font-weight: 700;
       margin-bottom: 20px;
-      color: #1a1a2e;
+      color: #2c3e50;
     }
-    
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #2c3e50;
+      margin-bottom: 8px;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #e0e7ff;
+      border-radius: 6px;
+      font-size: 13px;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #c41e3a;
+      box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.1);
+    }
+
     .modal-footer {
       display: flex;
       gap: 12px;
       margin-top: 24px;
       justify-content: flex-end;
     }
-    
-    .form-group {
-      margin-bottom: 16px;
-    }
-    
-    .form-group label {
-      display: block;
-      font-size: 13px;
-      font-weight: 600;
-      color: #1a1a2e;
-      margin-bottom: 8px;
-    }
-    
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #e0e7ff;
-      border-radius: 8px;
-      font-size: 13px;
-      font-family: inherit;
-    }
-    
-    .form-group textarea {
-      resize: vertical;
-      min-height: 100px;
-    }
-    
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      outline: none;
-      border-color: #c41e3a;
-      box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.1);
-    }
-    
-    .expanded-row {
-      background: #f8faff;
-    }
-    
-    .expanded-row td {
-      padding: 24px;
-    }
-    
-    .checkpoint-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 12px;
-    }
-    
-    .checkpoint-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px;
-      background: white;
-      border-radius: 6px;
-      border: 1px solid #e0e7ff;
-    }
-    
-    .checkpoint-item input {
-      cursor: pointer;
-    }
-    
-    .checkpoint-item label {
-      cursor: pointer;
-      font-size: 12px;
-      margin: 0;
-    }
 
-    /* Editable Checkpoint Styles */
-    .checkpoint-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-      padding-bottom: 10px;
-      border-bottom: 2px solid #e0e7ff;
-    }
-
-    .checkpoint-header h4 {
-      color: #1a1a2e;
-      margin: 0;
-      font-size: 13px;
-      font-weight: 600;
-    }
-
-    .checkpoint-edit-btn {
-      padding: 6px 12px;
-      background: #f0f2f5;
-      color: #c41e3a;
-      border: 1px solid #d0d5dd;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 11px;
-      font-weight: 600;
-      transition: all 0.2s;
-    }
-
-    .checkpoint-edit-btn:hover {
-      background: #e8eaed;
-    }
-
-    .checkpoint-list {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
-    }
-    
-    .checkpoint-item {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 8px;
-      background: white;
-      border-radius: 6px;
-      border: 1px solid #e0e7ff;
-    }
-    
-    .checkpoint-item input {
-      cursor: pointer;
-      width: 16px;
-      height: 16px;
-    }
-    
-    .checkpoint-item label {
-      cursor: pointer;
-      font-size: 11px;
-      margin: 0;
-      color: #1a1a2e;
-      font-weight: 500;
-    }
-
-    .checkpoint-item-editable {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px;
-      background: #f8faff;
-      border-radius: 6px;
-      border: 1px solid #d0d5dd;
-      margin-bottom: 8px;
-      transition: all 0.2s;
-    }
-
-    .checkpoint-item-editable input[type="text"] {
-      flex: 1;
-      padding: 6px 10px;
-      border: 1px solid #d0d5dd;
-      border-radius: 4px;
-      font-size: 11px;
-      font-family: inherit;
-    }
-
-    .checkpoint-item-editable input[type="text"]:focus {
-      outline: none;
-      border-color: #c41e3a;
-      box-shadow: 0 0 0 2px rgba(196, 30, 58, 0.1);
-    }
-
-    .checkpoint-delete-btn {
-      padding: 4px 8px;
-      background: #ffeaea;
-      color: #dc3545;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 10px;
-      font-weight: 600;
-      transition: all 0.2s;
-    }
-
-    .checkpoint-delete-btn:hover {
-      background: #ffd4d4;
-    }
-
-    .db-integration-notice {
-      background: #ffe8e8;
-      border: 1px solid #ffc6c6;
-      border-radius: 8px;
-      padding: 12px 16px;
-      margin-top: 16px;
-      font-size: 11px;
-      color: #c41e3a;
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-    }
-
-    .db-integration-notice i {
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-
-    .db-integration-notice strong {
-      display: block;
-      margin-bottom: 4px;
-    }
-    
-    .empty-state {
-      text-align: center;
-      padding: 48px 24px;
-      color: #7f8c8d;
-    }
-    
-    .empty-state i {
-      font-size: 48px;
-      margin-bottom: 16px;
-      opacity: 0.3;
-    }
-    
-    .empty-state p {
-      font-size: 14px;
-    }
-    
-    @media (max-width: 768px) {
-      .toolbar {
-        flex-direction: column;
-      }
-      
-      .search-box {
-        min-width: 100%;
-      }
-      
-      .filter-select {
-        min-width: 100%;
-      }
-      
-      .analytics-section {
-        grid-template-columns: 1fr;
-      }
-      
-      .header-content {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      
-      .header-stats {
-        width: 100%;
-        justify-content: space-around;
-      }
-    }
-    /* Login Screen */
+    /* Login */
     .login-screen {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
-      background: linear-gradient(135deg, #1a1a2e 0%, #2d2d44 100%);
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       display: flex;
       justify-content: center;
       align-items: center;
       z-index: 2000;
-      backdrop-filter: blur(10px);
     }
-    
+
     .login-screen.hidden {
       display: none;
     }
-    
+
     .login-box {
       background: white;
       border-radius: 16px;
       padding: 48px;
       width: 90%;
-      max-width: 400px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      max-width: 420px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
       text-align: center;
     }
-    
+
     .login-box h2 {
       font-size: 32px;
       font-weight: 700;
-      color: #1a1a2e;
+      color: #2c3e50;
       margin-bottom: 12px;
     }
-    
-    .login-box p {
-      font-size: 14px;
-      color: #7f8c8d;
-      margin-bottom: 32px;
-    }
-    
+
     .login-box i {
       font-size: 64px;
       color: #c41e3a;
       margin-bottom: 20px;
       display: block;
     }
-    
+
     .login-input-group {
       margin-bottom: 24px;
+      text-align: left;
     }
-    
+
     .login-input-group label {
       display: block;
       font-size: 12px;
       font-weight: 700;
-      color: #1a1a2e;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 12px;
-      text-align: left;
+      color: #2c3e50;
+      margin-bottom: 8px;
     }
-    
+
     .login-input-group input {
       width: 100%;
-      padding: 14px 16px;
+      padding: 12px 14px;
       border: 2px solid #e0e7ff;
-      border-radius: 8px;
-      font-size: 14px;
-      font-family: 'Courier New', monospace;
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: monospace;
       letter-spacing: 1px;
-      transition: all 0.3s;
     }
-    
+
     .login-input-group input:focus {
       outline: none;
       border-color: #c41e3a;
       box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.15);
     }
-    
+
     .login-btn {
       width: 100%;
-      padding: 14px 20px;
-      background: linear-gradient(135deg, #c41e3a 0%, #a01830 100%);
+      padding: 12px;
+      background: #c41e3a;
       color: white;
       border: none;
-      border-radius: 8px;
+      border-radius: 6px;
       font-size: 14px;
       font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
       cursor: pointer;
-      transition: all 0.3s;
     }
-    
+
     .login-btn:hover {
-      box-shadow: 0 8px 20px rgba(196, 30, 58, 0.3);
-      transform: translateY(-2px);
+      background: #a01830;
     }
-    
-    .login-btn:active {
-      transform: translateY(0);
-    }
-    
+
     .login-error {
       background: #f8d7da;
       color: #721c24;
@@ -826,335 +587,177 @@
       display: none;
       border: 1px solid #f5c6cb;
     }
-    
+
     .login-error.show {
       display: block;
-      animation: shake 0.5s;
-    }
-    
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-10px); }
-      75% { transform: translateX(10px); }
-    }
-    
-    .logout-btn {
-      position: fixed;
-      top: 24px;
-      right: 24px;
-      padding: 10px 16px;
-      background: rgba(255,255,255,0.2);
-      color: white;
-      border: 1px solid rgba(255,255,255,0.3);
-      border-radius: 6px;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s;
-      z-index: 100;
-    }
-    
-    .logout-btn:hover {
-      background: rgba(255,255,255,0.3);
-      border-color: rgba(255,255,255,0.5);
     }
   </style>
 </head>
 <body>
-  <!-- Login Screen -->
+  <!-- Login -->
   <div class="login-screen" id="loginScreen">
     <div class="login-box">
       <i class="fas fa-lock"></i>
       <h2>PMO Dashboard</h2>
-      <p>Secure Project Management Access</p>
-      <div class="login-error" id="loginError">
-        <i class="fas fa-exclamation-circle"></i> Incorrect password. Please try again.
-      </div>
+      <div class="login-error" id="loginError"><i class="fas fa-times-circle"></i> Wrong password</div>
       <div class="login-input-group">
-        <label for="passwordInput">Password</label>
-        <input 
-          type="password" 
-          id="passwordInput" 
-          placeholder="Enter authentication code" 
-          onkeypress="handlePasswordKeypress(event)"
-          autocomplete="off"
-        >
+        <label>Password</label>
+        <input type="password" id="passwordInput" placeholder="Enter code" 
+               onkeypress="if(event.key==='Enter') authenticate()">
       </div>
-      <button class="login-btn" onclick="authenticatePassword()">
-        <i class="fas fa-sign-in-alt"></i> Access Dashboard
-      </button>
+      <button class="login-btn" onclick="authenticate()">Access</button>
     </div>
   </div>
 
-  <!-- Logout Button (Hidden until authenticated) -->
-  <button class="logout-btn" id="logoutBtn" style="display:none;" onclick="logout()">
+  <button class="logout-btn" id="logoutBtn" onclick="logout()">
     <i class="fas fa-sign-out-alt"></i> Logout
   </button>
 
   <div class="container">
     <!-- Header -->
     <div class="header">
-      <div class="header-content">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start;">
         <div>
           <h1><i class="fas fa-chart-gantt"></i> PMO Dashboard</h1>
-          <p>Real-time project management and risk monitoring</p>
+          <p>Project Management & Risk Tracking</p>
         </div>
-        <div class="header-stats">
-          <div class="stat-item">
-            <div class="stat-value" id="globalTotal">0</div>
-            <div class="stat-label">Total Tasks</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-value" id="globalCompletion">0%</div>
-            <div class="stat-label">Completion</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-value" id="globalRisk">0</div>
-            <div class="stat-label">At Risk</div>
-          </div>
+        <button class="btn" id="headerLogout" onclick="logout()" style="display:none; margin-top:8px;">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+      </div>
+      <div class="header-stats">
+        <div class="stat-item">
+          <div class="stat-value" id="globalTotal">0</div>
+          <div class="stat-label">Total Tasks</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value" id="globalCompletion">0%</div>
+          <div class="stat-label">Completion</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value" id="globalRisk">0</div>
+          <div class="stat-label">At Risk</div>
         </div>
       </div>
     </div>
 
-    <!-- Tab Navigation -->
+    <!-- Tabs -->
     <div class="tabs-wrapper">
-      <button class="tab-btn active" onclick="switchTab('bo')">
-        <i class="fas fa-briefcase"></i> BO Tasks
-      </button>
-      <button class="tab-btn" onclick="switchTab('pmo')">
-        <i class="fas fa-tasks"></i> PMO Tasks
-      </button>
-      <button class="tab-btn" onclick="switchTab('dpqm')">
-        <i class="fas fa-chart-line"></i> DPQM
-      </button>
-      <button class="tab-btn" onclick="switchTab('pha')">
-        <i class="fas fa-calendar"></i> PHA
-      </button>
+      <button class="tab-btn active" onclick="switchTab('bo')">BO</button>
+      <button class="tab-btn" onclick="switchTab('pmo')">PMO</button>
+      <button class="tab-btn" onclick="switchTab('dpqm')">DPQM</button>
+      <button class="tab-btn" onclick="switchTab('pha')">PHA</button>
     </div>
 
-    <!-- ===== CONSOLIDATED TOOLBAR (ONE FOR ALL TABS) ===== -->
+    <!-- Toolbar -->
     <div class="toolbar-container">
       <div class="toolbar">
         <div class="search-box">
-          <input type="text" class="searchInput" placeholder="🔍 Search actions..." id="globalSearch">
+          <input type="text" placeholder="🔍 Search..." id="searchInput" onkeyup="applyFilters()">
         </div>
-        <select class="filter-select filterMonth" id="globalMonth">
+        <select class="filter-select" id="monthFilter" onchange="applyFilters()">
           <option value="">All Months</option>
-          <option value="1">January</option><option value="2">February</option><option value="3">March</option>
-          <option value="4">April</option><option value="5">May</option><option value="6">June</option>
-          <option value="7">July</option><option value="8">August</option><option value="9">September</option>
-          <option value="10">October</option><option value="11">November</option><option value="12">December</option>
+          <option value="1">Jan</option><option value="2">Feb</option><option value="3">Mar</option>
+          <option value="4">Apr</option><option value="5">May</option><option value="6">Jun</option>
+          <option value="7">Jul</option><option value="8">Aug</option><option value="9">Sep</option>
+          <option value="10">Oct</option><option value="11">Nov</option><option value="12">Dec</option>
         </select>
-        <select class="filter-select filterYear" id="globalYear">
+        <select class="filter-select" id="yearFilter" onchange="applyFilters()">
           <option value="">All Years</option>
           <option value="2024">2024</option>
           <option value="2025">2025</option>
           <option value="2026">2026</option>
         </select>
-        <select class="filter-select filterStatus" id="globalStatus">
+        <select class="filter-select" id="statusFilter" onchange="applyFilters()">
           <option value="">All Status</option>
           <option value="on-track">On Track</option>
           <option value="at-risk">At Risk</option>
           <option value="overdue">Overdue</option>
           <option value="complete">Complete</option>
         </select>
-        <button class="btn" onclick="openModal('addTaskModal')">
-          <i class="fas fa-plus"></i> Add Task
-        </button>
-        <button class="btn btn-secondary" onclick="openEmailModal()">
-          <i class="fas fa-envelope"></i> Email Report
-        </button>
-        <button class="btn btn-secondary" onclick="exportPDF()">
-          <i class="fas fa-file-pdf"></i> PDF Export
-        </button>
+        <button class="btn" onclick="openAddTaskModal()"><i class="fas fa-plus"></i> Add Task</button>
       </div>
     </div>
 
-    <!-- Dynamic Metrics (Updates based on active tab) -->
-    <div class="dashboard">
-      <div class="metric-card" onclick="setFilter('status', '')">
-        <div class="metric-label"><i class="fas fa-tasks"></i> Total Tasks</div>
+    <!-- Metrics -->
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-label"><i class="fas fa-list"></i> Total</div>
         <div class="metric-value" id="tabTotal">0</div>
-        <div class="metric-subtitle" id="tabTotalSub">Active items</div>
+        <div class="metric-subtitle" id="tabTotalSub">tasks</div>
       </div>
-      <div class="metric-card" onclick="setFilter('status', '')">
+      <div class="metric-card">
         <div class="metric-label"><i class="fas fa-check-circle"></i> Completion</div>
         <div class="metric-value" id="tabCompletion">0%</div>
         <div class="progress-container">
-          <div class="progress-bar">
-            <div class="progress-fill" id="tabProgressBar"></div>
-          </div>
-          <span id="tabProgressText">0/0</span>
+          <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
         </div>
       </div>
-      <div class="metric-card" onclick="setFilter('status', 'at-risk')">
+      <div class="metric-card">
         <div class="metric-label"><i class="fas fa-exclamation-triangle"></i> At Risk</div>
         <div class="metric-value" id="tabAtRisk">0</div>
-        <div class="metric-subtitle">Due within 3 days</div>
+        <div class="metric-subtitle">next 3 days</div>
       </div>
-      <div class="metric-card" onclick="setFilter('status', 'overdue')">
+      <div class="metric-card">
         <div class="metric-label"><i class="fas fa-calendar-times"></i> Overdue</div>
         <div class="metric-value" id="tabOverdue">0</div>
-        <div class="metric-subtitle">Past deadline</div>
+        <div class="metric-subtitle">past deadline</div>
       </div>
     </div>
 
-    <!-- Risk Alert (Dynamic per tab) -->
-    <div class="risk-alert-container" id="riskAlert">
-      <h4><i class="fas fa-exclamation-circle"></i> Active Risks & Issues</h4>
-      <div id="riskItems"></div>
-    </div>
-
-    <!-- Tab Contents -->
-    <div class="tab-content active" id="tab-bo">
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th></th>
-              <th>Task Name</th>
-              <th>Priority</th>
-              <th>Start Date</th>
-              <th>Status</th>
-              <th>Progress</th>
-              <th style="text-align: center;">Actions</th>
-            </tr>
-          </thead>
-          <tbody id="table-bo"></tbody>
-        </table>
-        <div class="empty-state" id="empty-bo" style="display:none;">
-          <i class="fas fa-inbox"></i>
-          <p>No tasks found</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="tab-content" id="tab-pmo">
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th></th>
-              <th>Task Name</th>
-              <th>Priority</th>
-              <th>Start Date</th>
-              <th>Status</th>
-              <th>Progress</th>
-              <th style="text-align: center;">Actions</th>
-            </tr>
-          </thead>
-          <tbody id="table-pmo"></tbody>
-        </table>
-        <div class="empty-state" id="empty-pmo" style="display:none;">
-          <i class="fas fa-inbox"></i>
-          <p>No tasks found</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="tab-content" id="tab-dpqm">
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th></th>
-              <th>Task Name</th>
-              <th>Priority</th>
-              <th>Start Date</th>
-              <th>Status</th>
-              <th>Progress</th>
-              <th style="text-align: center;">Actions</th>
-            </tr>
-          </thead>
-          <tbody id="table-dpqm"></tbody>
-        </table>
-        <div class="empty-state" id="empty-dpqm" style="display:none;">
-          <i class="fas fa-inbox"></i>
-          <p>No tasks found</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="tab-content" id="tab-pha">
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th></th>
-              <th>Task Name</th>
-              <th>Priority</th>
-              <th>Start Date</th>
-              <th>Status</th>
-              <th>Progress</th>
-              <th style="text-align: center;">Actions</th>
-            </tr>
-          </thead>
-          <tbody id="table-pha"></tbody>
-        </table>
-        <div class="empty-state" id="empty-pha" style="display:none;">
-          <i class="fas fa-inbox"></i>
-          <p>No tasks found</p>
-        </div>
+    <!-- Table -->
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:40px;"></th>
+            <th>Task</th>
+            <th>Priority</th>
+            <th>Start Date</th>
+            <th>Status</th>
+            <th>Progress</th>
+            <th style="width:80px;">View</th>
+            <th style="width:50px;">Delete</th>
+          </tr>
+        </thead>
+        <tbody id="taskBody"></tbody>
+      </table>
+      <div class="empty-state" id="emptyState" style="display:none;">
+        <i class="fas fa-inbox"></i>
+        <p>No tasks</p>
       </div>
     </div>
   </div>
 
-  <!-- Modals -->
+  <!-- Add Task Modal -->
   <div class="modal" id="addTaskModal">
     <div class="modal-content">
-      <div class="modal-header">Add New Task</div>
+      <div class="modal-header">Add Task</div>
       <div class="form-group">
         <label>Task Name</label>
-        <input type="text" id="taskName" placeholder="Enter task name">
+        <input type="text" id="taskNameInput" placeholder="Enter task name">
       </div>
       <div class="form-group">
         <label>Start Date</label>
-        <input type="date" id="taskDate">
+        <input type="date" id="taskDateInput">
       </div>
       <div class="form-group">
         <label>Priority</label>
-        <select id="taskPriority">
+        <select id="taskPriorityInput">
           <option value="low">Low</option>
-          <option value="medium">Medium</option>
+          <option value="medium" selected>Medium</option>
           <option value="high">High</option>
         </select>
       </div>
-      <div class="form-group">
-        <label>Assigned To</label>
-        <input type="text" id="taskAssignee" placeholder="Team member name">
-      </div>
       <div class="modal-footer">
-        <button class="btn btn-secondary" onclick="closeModal('addTaskModal')">Cancel</button>
-        <button class="btn" onclick="saveTask()">Save Task</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal" id="emailModal">
-    <div class="modal-content">
-      <div class="modal-header">Send Email Report</div>
-      <div class="form-group">
-        <label>Recipient Email</label>
-        <input type="email" id="emailInput" placeholder="user@example.com">
-      </div>
-      <div class="form-group">
-        <label>Report Type</label>
-        <select id="emailType">
-          <option value="all">All Tasks</option>
-          <option value="atrisk">At Risk Only</option>
-          <option value="overdue">Overdue Only</option>
-        </select>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" onclick="closeModal('emailModal')">Cancel</button>
-        <button class="btn" onclick="sendEmail()">Send</button>
+        <button class="btn btn-secondary" onclick="closeAddTaskModal()">Cancel</button>
+        <button class="btn" onclick="saveNewTask()">Save</button>
       </div>
     </div>
   </div>
 
   <script>
-    // Constants
-    const CHECKPOINTS = [
+    const MILESTONES = [
       { label: 'Initiation', offset: 0 },
       { label: 'Planning', offset: 5 },
       { label: 'Execution', offset: 15 },
@@ -1163,538 +766,322 @@
     ];
 
     const PRIORITIES = {
-      high: { label: 'HIGH', color: '#dc3545' },
-      medium: { label: 'MEDIUM', color: '#ffc107' },
-      low: { label: 'LOW', color: '#28a745' }
+      high: { label: 'HIGH', color: '#c41e3a' },
+      medium: { label: 'MEDIUM', color: '#f39c12' },
+      low: { label: 'LOW', color: '#27ae60' }
     };
 
     let currentTab = 'bo';
-    let charts = {};
 
-    function getToday() {
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      return today;
+    // INIT
+    function init() {
+      if (sessionStorage.getItem('pmo-auth') !== 'true') {
+        document.getElementById('loginScreen').classList.remove('hidden');
+        return;
+      }
+      unlockApp();
     }
 
-    function getStatus(startDate, checks) {
-      const start = new Date(startDate);
-      const today = getToday();
-      const completed = checks.every(c => c);
+    function authenticate() {
+      const pwd = document.getElementById('passwordInput').value;
+      if (pwd === 'pmo2026') {
+        sessionStorage.setItem('pmo-auth', 'true');
+        document.getElementById('loginScreen').classList.add('hidden');
+        unlockApp();
+      } else {
+        document.getElementById('loginError').classList.add('show');
+        setTimeout(() => document.getElementById('loginError').classList.remove('show'), 2000);
+      }
+    }
+
+    function unlockApp() {
+      document.getElementById('headerLogout').style.display = 'block';
+      initTasks();
+      render();
+    }
+
+    function logout() {
+      if (confirm('Logout?')) {
+        sessionStorage.removeItem('pmo-auth');
+        location.reload();
+      }
+    }
+
+    // STORAGE
+    function initTasks() {
+      ['bo', 'pmo', 'dpqm', 'pha'].forEach(tab => {
+        if (!localStorage.getItem(`tasks-${tab}`)) {
+          localStorage.setItem(`tasks-${tab}`, JSON.stringify([
+            { id: Date.now(), name: 'Kickoff Meeting', date: '2026-06-15', priority: 'high', checks: [0,0,0,0,0] }
+          ]));
+        }
+      });
+    }
+
+    function getTasks(tab) {
+      const data = localStorage.getItem(`tasks-${tab}`);
+      return data ? JSON.parse(data) : [];
+    }
+
+    function saveTasks(tab, tasks) {
+      localStorage.setItem(`tasks-${tab}`, JSON.stringify(tasks));
+    }
+
+    // CALCULATIONS
+    function getStatus(date, checks) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
       
-      if (completed) return 'complete';
+      if (checks.every(c => c)) return 'complete';
       
       for (let i = 0; i < checks.length; i++) {
         if (!checks[i]) {
-          const cp = CHECKPOINTS[i];
-          const checkDate = new Date(start);
-          checkDate.setUTCDate(checkDate.getUTCDate() + cp.offset);
-          
-          if (checkDate < today) return 'overdue';
-          if (checkDate - today < 3 * 24 * 60 * 60 * 1000) return 'at-risk';
+          const d = new Date(date);
+          d.setDate(d.getDate() + MILESTONES[i].offset);
+          if (d < today) return 'overdue';
+          if ((d - today) < 3 * 24 * 60 * 60 * 1000) return 'at-risk';
         }
       }
       return 'on-track';
     }
 
-    function loadData(tab) {
-      const stored = localStorage.getItem(`pmo-${tab}`);
-      return stored ? JSON.parse(stored) : [];
-    }
+    // RENDER
+    function render() {
+      const tasks = getTasks(currentTab);
+      const tbody = document.getElementById('taskBody');
+      const empty = document.getElementById('emptyState');
 
-    function saveData(tab, data) {
-      localStorage.setItem(`pmo-${tab}`, JSON.stringify(data));
-    }
-
-    function switchTab(tab) {
-      currentTab = tab;
-      
-      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-      event.target.classList.add('active');
-      
-      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-      document.getElementById(`tab-${tab}`).classList.add('active');
-      
-      renderTable(tab);
-      updateTabStats(tab);
-      updateRisks(tab);
-    }
-
-    function renderTable(tab) {
-      const data = loadData(tab);
-      const tbody = document.getElementById(`table-${tab}`);
-      const empty = document.getElementById(`empty-${tab}`);
-      
-      if (data.length === 0) {
+      if (tasks.length === 0) {
         tbody.innerHTML = '';
         empty.style.display = 'block';
+      } else {
+        empty.style.display = 'none';
+        tbody.innerHTML = tasks.map((task, idx) => {
+          const status = getStatus(task.date, task.checks);
+          const done = task.checks.filter(c => c).length;
+          const pct = Math.round((done / 5) * 100);
+
+          return `
+            <tr>
+              <td><i class="fas fa-chevron-down" onclick="toggleRow(this)" style="cursor:pointer; color:#c41e3a;"></i></td>
+              <td>
+                <div class="task-name" ondblclick="editName(${idx}, this)">
+                  <span id="name-${idx}">${task.name}</span>
+                  <i class="task-edit-icon fas fa-pencil-alt"></i>
+                </div>
+              </td>
+              <td><span style="color:${PRIORITIES[task.priority].color}; font-weight:700;">${PRIORITIES[task.priority].label}</span></td>
+              <td>${task.date}</td>
+              <td><span class="status-badge status-${status}">${status}</span></td>
+              <td>
+                <div style="display:flex; gap:8px; align-items:center;">
+                  <div class="progress-bar" style="width:60px;"><div class="progress-fill" style="width:${pct}%"></div></div>
+                  <span style="font-size:11px; font-weight:600;">${pct}%</span>
+                </div>
+              </td>
+              <td><button class="btn btn-secondary" style="padding:6px 10px; font-size:11px;" onclick="expandRow(this)">View</button></td>
+              <td><button class="btn" style="padding:6px 10px; font-size:11px; background:#dc3545;" onclick="deleteTask(${idx})"><i class="fas fa-trash"></i></button></td>
+            </tr>
+            <tr class="expanded-row" style="display:none;">
+              <td colspan="7">
+                <div class="checkpoint-section">
+                  <h4>✓ Milestones (Editable)</h4>
+                  <div class="checkpoint-list">
+                    ${MILESTONES.map((m, i) => `
+                      <div class="checkpoint-item">
+                        <input type="checkbox" ${task.checks[i] ? 'checked' : ''} 
+                               onchange="checkMilestone(${idx}, ${i})">
+                        <label>${m.label}</label>
+                      </div>
+                    `).join('')}
+                  </div>
+                  <div class="db-notice">
+                    <i class="fas fa-database"></i> Saved to browser storage. Backend integration pending.
+                  </div>
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join('');
+      }
+
+      applyFilters();
+      updateStats();
+    }
+
+    function toggleRow(el) {
+      const row = el.closest('tr').nextElementSibling;
+      if (row?.classList.contains('expanded-row')) {
+        const show = row.style.display === 'none';
+        row.style.display = show ? '' : 'none';
+        el.style.transform = show ? 'rotate(-180deg)' : 'rotate(0deg)';
+      }
+    }
+
+    function expandRow(btn) {
+      const row = btn.closest('tr').nextElementSibling;
+      row.style.display = row.style.display === 'none' ? '' : 'none';
+    }
+
+    function editName(idx, el) {
+      const tasks = getTasks(currentTab);
+      const span = el.querySelector('span');
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.value = span.textContent;
+      span.replaceWith(input);
+      input.focus();
+      input.select();
+
+      function save() {
+        if (input.value.trim()) {
+          tasks[idx].name = input.value.trim();
+          saveTasks(currentTab, tasks);
+          render();
+        } else {
+          render();
+        }
+      }
+
+      input.onblur = save;
+      input.onkeydown = (e) => {
+        if (e.key === 'Enter') save();
+        if (e.key === 'Escape') render();
+      };
+    }
+
+    function checkMilestone(idx, milestoneIdx) {
+      const tasks = getTasks(currentTab);
+      tasks[idx].checks[milestoneIdx] = tasks[idx].checks[milestoneIdx] ? 0 : 1;
+      saveTasks(currentTab, tasks);
+      render();
+    }
+
+    function deleteTask(idx) {
+      const pwd = prompt('Enter password to delete:');
+      if (pwd === null) return;
+      if (pwd !== 'pmo2026') {
+        alert('Wrong password');
         return;
       }
-      
-      empty.style.display = 'none';
-      tbody.innerHTML = data.map((item, idx) => {
-        const status = getStatus(item.startDate, item.checks);
-        const completed = item.checks.filter(c => c).length;
-        const pct = Math.round((completed / 5) * 100);
-        const statusBadge = `status-${status}`;
-        
-        return `
-          <tr data-tab="${tab}" data-row="${idx}">
-            <td><i class="fas fa-chevron-down" style="cursor:pointer; color:#667eea;" onclick="toggleExpand(this)"></i></td>
-            <td><strong data-action>${item.action}</strong></td>
-            <td><span style="color:${PRIORITIES[item.priority].color}; font-weight:700;">${PRIORITIES[item.priority].label}</span></td>
-            <td data-start-date>${item.startDate}</td>
-            <td><span class="status-badge ${statusBadge}">${status}</span></td>
-            <td><span>${pct}%</span></td>
-            <td style="text-align:center;">
-              <button class="btn btn-secondary" style="padding:6px 12px; font-size:11px;" onclick="editTask('${tab}', ${idx})">
-                <i class="fas fa-edit"></i> Edit
-              </button>
-            </td>
-          </tr>
-          <tr class="expanded-row" style="display:none;">
-            <td colspan="7">
-              <div class="checkpoint-header">
-                <h4>✓ Checkpoints (Editable)</h4>
-                <button class="checkpoint-edit-btn" onclick="toggleCheckpointEdit(this)">
-                  <i class="fas fa-edit"></i> Edit
-                </button>
-              </div>
-              
-              <div class="checkpoint-list" data-tab="${tab}" data-row="${idx}">
-                ${CHECKPOINTS.map((cp, i) => `
-                  <div class="checkpoint-item">
-                    <input type="checkbox" data-check data-tab="${tab}" data-row="${idx}" data-checkpoint="${i}" 
-                           ${item.checks[i] ? 'checked' : ''} onchange="updateCheck('${tab}', ${idx}, ${i})">
-                    <label>${cp.label}</label>
-                  </div>
-                `).join('')}
-              </div>
-
-              <div class="db-integration-notice">
-                <i class="fas fa-database"></i>
-                <div>
-                  <strong>Database Integration Required</strong>
-                  Custom checkpoints will be saved to your database. Connect your backend to persist edits.
-                </div>
-              </div>
-
-              <div style="margin-top:16px; padding-top:16px; border-top:1px solid #e0e7ff;">
-                <div style="font-size:12px; color:#7f8c8d; margin-bottom:8px;"><strong>Assigned:</strong> ${item.assignee || 'Unassigned'}</div>
-              </div>
-            </td>
-          </tr>
-        `;
-      }).join('');
+      const tasks = getTasks(currentTab);
+      tasks.splice(idx, 1);
+      saveTasks(currentTab, tasks);
+      render();
     }
 
-    function toggleCheckpointEdit(btn) {
-      const checkpointList = btn.closest('.checkpoint-header').nextElementSibling;
-      const isEditing = btn.classList.contains('editing');
-      
-      if (isEditing) {
-        // Exit edit mode
-        btn.classList.remove('editing');
-        btn.innerHTML = '<i class="fas fa-edit"></i> Edit';
-        checkpointList.style.display = 'grid';
-        const editView = checkpointList.nextElementSibling;
-        if (editView?.classList.contains('checkpoint-edit-view')) {
-          editView.style.display = 'none';
-        }
-      } else {
-        // Enter edit mode
-        btn.classList.add('editing');
-        btn.innerHTML = '<i class="fas fa-check"></i> Done';
-        checkpointList.style.display = 'none';
-        
-        let editView = checkpointList.nextElementSibling;
-        if (!editView?.classList.contains('checkpoint-edit-view')) {
-          editView = document.createElement('div');
-          editView.className = 'checkpoint-edit-view';
-          editView.style.display = 'grid';
-          editView.style.gridTemplateColumns = 'repeat(2, 1fr)';
-          editView.style.gap = '8px';
-          checkpointList.parentNode.insertBefore(editView, checkpointList.nextSibling);
-        }
-        
-        editView.style.display = 'grid';
-        editView.innerHTML = CHECKPOINTS.map((cp, i) => `
-          <div class="checkpoint-item-editable">
-            <input type="text" value="${cp.label}" placeholder="Name" data-index="${i}" style="font-size: 11px; padding: 5px 8px;">
-            <button class="checkpoint-delete-btn" onclick="deleteCheckpoint(${i})" style="padding: 3px 6px;">
-              <i class="fas fa-trash" style="font-size: 10px;"></i>
-            </button>
-          </div>
-        `).join('') + `
-          <button class="btn" style="grid-column: 1 / -1; padding: 8px 12px; font-size: 11px; margin-top: 4px;" onclick="addCheckpoint()">
-            <i class="fas fa-plus"></i> Add
-          </button>
-        `;
-      }
+    // MODAL
+    function openAddTaskModal() {
+      document.getElementById('addTaskModal').classList.add('show');
+      document.getElementById('taskNameInput').focus();
     }
 
-    function deleteCheckpoint(index) {
-      if (confirm('Are you sure you want to remove this checkpoint?')) {
-        CHECKPOINTS.splice(index, 1);
-        const btn = event.target.closest('.checkpoint-edit-btn');
-        if (btn) {
-          btn.click();
-          btn.click();
-        }
-      }
+    function closeAddTaskModal() {
+      document.getElementById('addTaskModal').classList.remove('show');
     }
 
-    function addCheckpoint() {
-      const newName = prompt('Enter checkpoint name:');
-      if (newName && newName.trim()) {
-        CHECKPOINTS.push({
-          label: newName.trim(),
-          offset: CHECKPOINTS.length * 10
-        });
-        
-        // Refresh the edit view with the new checkpoint
-        const btn = event.target.closest('.checkpoint-edit-btn') || 
-                   document.querySelector('.checkpoint-edit-btn.editing');
-        if (btn) {
-          const checkpointList = btn.closest('.checkpoint-header').nextElementSibling;
-          const editView = checkpointList.nextElementSibling;
-          
-          if (editView?.classList.contains('checkpoint-edit-view')) {
-            editView.innerHTML = CHECKPOINTS.map((cp, i) => `
-              <div class="checkpoint-item-editable">
-                <input type="text" value="${cp.label}" placeholder="Name" data-index="${i}" style="font-size: 11px; padding: 5px 8px;">
-                <button class="checkpoint-delete-btn" onclick="deleteCheckpoint(${i})" style="padding: 3px 6px;">
-                  <i class="fas fa-trash" style="font-size: 10px;"></i>
-                </button>
-              </div>
-            `).join('') + `
-              <button class="btn" style="grid-column: 1 / -1; padding: 8px 12px; font-size: 11px; margin-top: 4px;" onclick="addCheckpoint()">
-                <i class="fas fa-plus"></i> Add
-              </button>
-            `;
-          }
-        }
-      }
-    }
-
-    function toggleExpand(el) {
-      const row = el.closest('tr');
-      const next = row.nextElementSibling;
-      if (next?.classList.contains('expanded-row')) {
-        next.style.display = next.style.display === 'none' ? '' : 'none';
-        el.style.transform = next.style.display === 'none' ? 'rotate(0deg)' : 'rotate(-180deg)';
-      }
-    }
-
-    function updateTabStats(tab) {
-      const data = loadData(tab);
-      const total = data.length;
-      const completed = data.filter(item => item.checks.every(c => c)).length;
-      const atRisk = data.filter(item => {
-        const s = getStatus(item.startDate, item.checks);
-        return s === 'at-risk' || s === 'overdue';
-      }).length;
-      const overdue = data.filter(item => getStatus(item.startDate, item.checks) === 'overdue').length;
-      
-      document.getElementById('tabTotal').textContent = total;
-      document.getElementById('tabTotalSub').textContent = `${total} active items`;
-      document.getElementById('tabCompletion').textContent = (total === 0 ? 0 : Math.round((completed / total) * 100)) + '%';
-      document.getElementById('tabProgressBar').style.width = (total === 0 ? 0 : Math.round((completed / total) * 100)) + '%';
-      document.getElementById('tabProgressText').textContent = `${completed}/${total}`;
-      document.getElementById('tabAtRisk').textContent = atRisk;
-      document.getElementById('tabOverdue').textContent = overdue;
-    }
-
-    function updateRisks(tab) {
-      const risks = [];
-      const data = loadData(tab);
-      
-      data.forEach(item => {
-        const status = getStatus(item.startDate, item.checks);
-        if (status === 'overdue') {
-          CHECKPOINTS.forEach((cp, idx) => {
-            if (!item.checks[idx]) {
-              const d = new Date(item.startDate + 'T00:00:00Z');
-              d.setUTCDate(d.getUTCDate() + cp.offset);
-              const diff = (d - getToday()) / (1000 * 60 * 60 * 24);
-              if (diff < 0) {
-                risks.push(`<div class="risk-alert-item"><i class="fas fa-times-circle"></i> <strong>${item.action}</strong> - ${cp.label} overdue by ${Math.abs(Math.floor(diff))} days</div>`);
-              }
-            }
-          });
-        }
-      });
-      
-      const riskAlert = document.getElementById('riskAlert');
-      const riskItems = document.getElementById('riskItems');
-      
-      if (risks.length > 0) {
-        riskAlert.classList.add('show');
-        riskItems.innerHTML = risks.join('');
-      } else {
-        riskAlert.classList.remove('show');
-      }
-    }
-
-    function updateCheck(tab, row, checkpoint) {
-      const data = loadData(tab);
-      data[row].checks[checkpoint] = !data[row].checks[checkpoint];
-      saveData(tab, data);
-      renderTable(tab);
-      updateTabStats(tab);
-      updateRisks(tab);
-      updateGlobalStats();
-    }
-
-    function updateGlobalStats() {
-      let globalTotal = 0;
-      let globalCompleted = 0;
-      let globalRisk = 0;
-
-      ['bo', 'pmo', 'dpqm', 'pha'].forEach(tab => {
-        const data = loadData(tab);
-        globalTotal += data.length;
-        data.forEach(item => {
-          if (item.checks.every(c => c)) globalCompleted++;
-          if (getStatus(item.startDate, item.checks) === 'at-risk' || getStatus(item.startDate, item.checks) === 'overdue') {
-            globalRisk++;
-          }
-        });
-      });
-
-      const globalPct = globalTotal === 0 ? 0 : Math.round((globalCompleted / globalTotal) * 100);
-      document.getElementById('globalTotal').textContent = globalTotal;
-      document.getElementById('globalCompletion').textContent = globalPct + '%';
-      document.getElementById('globalRisk').textContent = globalRisk;
-    }
-
-    function applyGlobalFilters() {
-      const search = document.getElementById('globalSearch').value.toLowerCase();
-      const month = document.getElementById('globalMonth').value;
-      const year = document.getElementById('globalYear').value;
-      const status = document.getElementById('globalStatus').value;
-
-      const data = loadData(currentTab);
-      const tbody = document.getElementById(`table-${currentTab}`);
-      
-      let visibleCount = 0;
-      tbody.querySelectorAll('tr[data-row]').forEach((row, idx) => {
-        const item = data[idx];
-        const action = item.action.toLowerCase();
-        const d = new Date(item.startDate);
-        const rowMonth = String(d.getMonth() + 1);
-        const rowYear = String(d.getFullYear());
-        const rowStatus = getStatus(item.startDate, item.checks);
-
-        let show = true;
-        if (search && !action.includes(search)) show = false;
-        if (month && rowMonth !== month) show = false;
-        if (year && rowYear !== year) show = false;
-        if (status && rowStatus !== status) show = false;
-
-        row.style.display = show ? '' : 'none';
-        const nextRow = row.nextElementSibling;
-        if (nextRow?.classList.contains('expanded-row')) {
-          nextRow.style.display = show ? '' : 'none';
-        }
-        if (show) visibleCount++;
-      });
-
-      const empty = document.getElementById(`empty-${currentTab}`);
-      empty.style.display = visibleCount === 0 ? 'block' : 'none';
-    }
-
-    function setFilter(type, value) {
-      if (type === 'status') {
-        document.getElementById('globalStatus').value = value;
-      }
-      applyGlobalFilters();
-    }
-
-    function openModal(id) {
-      document.getElementById(id).classList.add('show');
-    }
-
-    function closeModal(id) {
-      document.getElementById(id).classList.remove('show');
-    }
-
-    function saveTask() {
-      const name = document.getElementById('taskName').value;
-      const date = document.getElementById('taskDate').value;
-      const priority = document.getElementById('taskPriority').value;
-      const assignee = document.getElementById('taskAssignee').value;
+    function saveNewTask() {
+      const name = document.getElementById('taskNameInput').value;
+      const date = document.getElementById('taskDateInput').value;
+      const priority = document.getElementById('taskPriorityInput').value;
 
       if (!name || !date) {
-        alert('Please fill in all required fields');
+        alert('Fill all fields');
         return;
       }
 
-      const data = loadData(currentTab);
-      data.push({
-        action: name,
-        startDate: date,
+      const tasks = getTasks(currentTab);
+      tasks.push({
+        id: Date.now(),
+        name: name.trim(),
+        date: date,
         priority: priority,
-        assignee: assignee,
-        checks: [false, false, false, false, false]
-      });
-      saveData(currentTab, data);
-      
-      document.getElementById('taskName').value = '';
-      document.getElementById('taskDate').value = '';
-      document.getElementById('taskPriority').value = 'medium';
-      document.getElementById('taskAssignee').value = '';
-      
-      closeModal('addTaskModal');
-      renderTable(currentTab);
-      updateTabStats(currentTab);
-      updateGlobalStats();
-    }
-
-    function editTask(tab, idx) {
-      alert('Edit functionality - integrate with your backend');
-    }
-
-    function openEmailModal() {
-      openModal('emailModal');
-    }
-
-    function sendEmail() {
-      const email = document.getElementById('emailInput').value;
-      const type = document.getElementById('emailType').value;
-
-      if (!email) {
-        alert('Please enter an email address');
-        return;
-      }
-
-      const data = loadData(currentTab);
-      let body = `PMO Report - ${currentTab.toUpperCase()} (${type})\n`;
-      body += `Generated: ${new Date().toLocaleString()}\n\n`;
-
-      data.forEach(item => {
-        const status = getStatus(item.startDate, item.checks);
-        if (type === 'overdue' && status !== 'overdue') return;
-        if (type === 'atrisk' && (status !== 'at-risk' && status !== 'overdue')) return;
-
-        body += `📌 ${item.action}\n`;
-        body += `   Status: ${status.toUpperCase()}\n`;
-        body += `   Progress: ${item.checks.filter(c => c).length}/5\n`;
-        body += `   Assigned: ${item.assignee || 'Unassigned'}\n\n`;
+        checks: [0, 0, 0, 0, 0]
       });
 
-      alert(`✅ Email ready for ${email}\n\nTo send: Set up email service (SendGrid, Postmark, etc.)\n\nPreview:\n${body}`);
-      closeModal('emailModal');
+      saveTasks(currentTab, tasks);
+      closeAddTaskModal();
+      document.getElementById('taskNameInput').value = '';
+      document.getElementById('taskDateInput').value = '';
+      render();
     }
 
-    function exportPDF() {
-      const data = loadData(currentTab);
-      let html = `<h1>PMO Report - ${currentTab.toUpperCase()}</h1><p>Generated: ${new Date().toLocaleString()}</p><table style="width:100%; border-collapse: collapse;">`;
-      html += '<tr style="border: 1px solid #ddd;"><th style="border: 1px solid #ddd; padding: 8px;">Task</th><th style="border: 1px solid #ddd; padding: 8px;">Status</th><th style="border: 1px solid #ddd; padding: 8px;">Progress</th></tr>';
+    // FILTERS
+    function applyFilters() {
+      const search = document.getElementById('searchInput').value.toLowerCase();
+      const month = document.getElementById('monthFilter').value;
+      const year = document.getElementById('yearFilter').value;
+      const status = document.getElementById('statusFilter').value;
 
-      data.forEach(item => {
-        const status = getStatus(item.startDate, item.checks);
-        const pct = Math.round((item.checks.filter(c => c).length / 5) * 100);
-        html += `<tr style="border: 1px solid #ddd;"><td style="border: 1px solid #ddd; padding: 8px;">${item.action}</td><td style="border: 1px solid #ddd; padding: 8px;">${status}</td><td style="border: 1px solid #ddd; padding: 8px;">${pct}%</td></tr>`;
-      });
+      document.querySelectorAll('#taskBody > tr:not(.expanded-row)').forEach(row => {
+        const name = row.querySelector('span').textContent.toLowerCase();
+        const date = row.querySelector('td:nth-child(4)').textContent;
+        const statusText = row.querySelector('.status-badge').textContent.toLowerCase().replace(/\s/g, '-');
 
-      html += '</table>';
+        const d = new Date(date);
+        const m = String(d.getMonth() + 1);
+        const y = String(d.getFullYear());
 
-      const element = document.createElement('div');
-      element.innerHTML = html;
+        let show = true;
+        if (search && !name.includes(search)) show = false;
+        if (month && m !== month) show = false;
+        if (year && y !== year) show = false;
+        if (status && !statusText.includes(status)) show = false;
 
-      const opt = {
-        margin: 10,
-        filename: `pmo-report-${currentTab}-${new Date().toISOString().split('T')[0]}.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
-      };
-
-      html2pdf().set(opt).from(element).save();
-    }
-
-    // ===== AUTHENTICATION FUNCTIONS =====
-    const CORRECT_PASSWORD = 'pmo2026';
-
-    function checkAuthentication() {
-      const isAuthenticated = sessionStorage.getItem('pmo-authenticated');
-      if (isAuthenticated === 'true') {
-        unlockDashboard();
-      } else {
-        lockDashboard();
-      }
-    }
-
-    function authenticatePassword() {
-      const passwordInput = document.getElementById('passwordInput');
-      const password = passwordInput.value;
-      const loginError = document.getElementById('loginError');
-
-      if (password === CORRECT_PASSWORD) {
-        sessionStorage.setItem('pmo-authenticated', 'true');
-        loginError.classList.remove('show');
-        unlockDashboard();
-      } else {
-        loginError.classList.add('show');
-        passwordInput.value = '';
-        passwordInput.focus();
-        
-        // Remove error message after 3 seconds
-        setTimeout(() => {
-          loginError.classList.remove('show');
-        }, 3000);
-      }
-    }
-
-    function handlePasswordKeypress(event) {
-      if (event.key === 'Enter') {
-        authenticatePassword();
-      }
-    }
-
-    function unlockDashboard() {
-      document.getElementById('loginScreen').classList.add('hidden');
-      document.getElementById('logoutBtn').style.display = 'block';
-      
-      // Initialize dashboard
-      ['bo', 'pmo', 'dpqm', 'pha'].forEach(tab => {
-        const data = loadData(tab);
-        if (data.length === 0) {
-          saveData(tab, [
-            { action: 'Sample Task', startDate: '2026-06-15', priority: 'high', assignee: 'Team', checks: [false, false, false, false, false] }
-          ]);
+        row.style.display = show ? '' : 'none';
+        const next = row.nextElementSibling;
+        if (next?.classList.contains('expanded-row')) {
+          next.style.display = 'none';
         }
       });
-
-      renderTable('bo');
-      updateTabStats('bo');
-      updateRisks('bo');
-      updateGlobalStats();
     }
 
-    function lockDashboard() {
-      document.getElementById('loginScreen').classList.remove('hidden');
-      document.getElementById('logoutBtn').style.display = 'none';
-      document.getElementById('passwordInput').value = '';
-      document.getElementById('passwordInput').focus();
+    // STATS
+    function updateStats() {
+      const tasks = getTasks(currentTab);
+      const total = tasks.length;
+      const done = tasks.filter(t => t.checks.every(c => c)).length;
+      const atRisk = tasks.filter(t => {
+        const s = getStatus(t.date, t.checks);
+        return s === 'at-risk' || s === 'overdue';
+      }).length;
+      const overdue = tasks.filter(t => getStatus(t.date, t.checks) === 'overdue').length;
+
+      document.getElementById('tabTotal').textContent = total;
+      document.getElementById('tabTotalSub').textContent = total + ' tasks';
+      const pct = total === 0 ? 0 : Math.round((done / total) * 100);
+      document.getElementById('tabCompletion').textContent = pct + '%';
+      document.getElementById('progressFill').style.width = pct + '%';
+      document.getElementById('tabAtRisk').textContent = atRisk;
+      document.getElementById('tabOverdue').textContent = overdue;
+
+      // Global
+      let gTotal = 0, gDone = 0, gRisk = 0;
+      ['bo', 'pmo', 'dpqm', 'pha'].forEach(tab => {
+        const t = getTasks(tab);
+        gTotal += t.length;
+        gDone += t.filter(x => x.checks.every(c => c)).length;
+        gRisk += t.filter(x => {
+          const s = getStatus(x.date, x.checks);
+          return s === 'at-risk' || s === 'overdue';
+        }).length;
+      });
+
+      document.getElementById('globalTotal').textContent = gTotal;
+      document.getElementById('globalCompletion').textContent = (gTotal === 0 ? 0 : Math.round((gDone / gTotal) * 100)) + '%';
+      document.getElementById('globalRisk').textContent = gRisk;
     }
 
-    function logout() {
-      if (confirm('Are you sure you want to logout?')) {
-        sessionStorage.removeItem('pmo-authenticated');
-        lockDashboard();
-      }
+    // TAB SWITCH
+    function switchTab(tab) {
+      currentTab = tab;
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+      render();
     }
 
-    // Event Listeners
-    document.getElementById('globalSearch').addEventListener('input', applyGlobalFilters);
-    document.getElementById('globalMonth').addEventListener('change', applyGlobalFilters);
-    document.getElementById('globalYear').addEventListener('change', applyGlobalFilters);
-    document.getElementById('globalStatus').addEventListener('change', applyGlobalFilters);
-
-    // Check authentication on page load
-    checkAuthentication();
+    // START
+    init();
   </script>
 </body>
 </html>
